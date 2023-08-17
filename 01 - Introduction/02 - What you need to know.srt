@@ -1,0 +1,140 @@
+1
+00:00:00,006 --> 00:00:02,005
+- This course is designed to introduce you
+
+2
+00:00:02,005 --> 00:00:03,007
+to the basic concepts
+
+3
+00:00:03,007 --> 00:00:06,008
+of infrastructure as code DevOps style,
+
+4
+00:00:06,008 --> 00:00:09,003
+that means hot and sassy.
+
+5
+00:00:09,003 --> 00:00:10,007
+To get the most out of this course,
+
+6
+00:00:10,007 --> 00:00:13,004
+you may want to watch the course DevOps Fundamentals here
+
+7
+00:00:13,004 --> 00:00:15,004
+in the library for context.
+
+8
+00:00:15,004 --> 00:00:17,001
+In that course, James and I discussed
+
+9
+00:00:17,001 --> 00:00:18,006
+the foundations of DevOps
+
+10
+00:00:18,006 --> 00:00:21,000
+and how the three major practice areas,
+
+11
+00:00:21,000 --> 00:00:24,000
+infrastructure as code, continuous delivery,
+
+12
+00:00:24,000 --> 00:00:27,008
+and site reliability engineering fit into it.
+
+13
+00:00:27,008 --> 00:00:29,009
+This course drills down into infrastructure
+
+14
+00:00:29,009 --> 00:00:33,002
+as code specifically to discuss it in depth.
+
+15
+00:00:33,002 --> 00:00:34,005
+To get the most from this course,
+
+16
+00:00:34,005 --> 00:00:37,003
+you should be familiar with system admin basics,
+
+17
+00:00:37,003 --> 00:00:40,000
+be able to use the command line and SSH,
+
+18
+00:00:40,000 --> 00:00:44,000
+and be familiar with some sort of programming or scripting.
+
+19
+00:00:44,000 --> 00:00:47,003
+We'll be using the Linux Command Line on the AWS Cloud
+
+20
+00:00:47,003 --> 00:00:49,007
+and an Akaunting GitHub for our demos.
+
+21
+00:00:49,007 --> 00:00:51,000
+You should be able to reproduce it
+
+22
+00:00:51,000 --> 00:00:53,005
+from your desktop client of choice.
+
+23
+00:00:53,005 --> 00:00:55,008
+Our intent is for this course to be accessible
+
+24
+00:00:55,008 --> 00:00:59,007
+for anyone with even a basic IT experience.
+
+25
+00:00:59,007 --> 00:01:02,002
+While we're making our source files available to you,
+
+26
+00:01:02,002 --> 00:01:05,001
+this isn't meant to be a lab course where you follow along
+
+27
+00:01:05,001 --> 00:01:08,007
+and perform the activities to learn a specific technology.
+
+28
+00:01:08,007 --> 00:01:09,009
+Instead, we'll be talking
+
+29
+00:01:09,009 --> 00:01:12,001
+about infrastructure as code concepts,
+
+30
+00:01:12,001 --> 00:01:14,005
+why you would use them, and then illustrating
+
+31
+00:01:14,005 --> 00:01:17,004
+how to implement them in a variety of tools.
+
+32
+00:01:17,004 --> 00:01:19,007
+So don't expect detailed instructions
+
+33
+00:01:19,007 --> 00:01:22,003
+on how to install and configure those tools here,
+
+34
+00:01:22,003 --> 00:01:25,001
+but there are entire courses here in the library
+
+35
+00:01:25,001 --> 00:01:27,000
+on each one of them when you're ready.
+

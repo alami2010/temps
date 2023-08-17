@@ -1,0 +1,572 @@
+1
+00:00:01,000 --> 00:00:02,002
+- [Instructor] Now that James has told you
+
+2
+00:00:02,002 --> 00:00:05,000
+about Docker containers let's get an application
+
+3
+00:00:05,000 --> 00:00:07,003
+deployed onto our Kubernetes cluster.
+
+4
+00:00:07,003 --> 00:00:12,000
+It's sitting here empty except for all the default services.
+
+5
+00:00:12,000 --> 00:00:13,005
+Very lonely.
+
+6
+00:00:13,005 --> 00:00:16,006
+So we could do this by hand, but we're not animals, right?
+
+7
+00:00:16,006 --> 00:00:18,006
+This is an infrastructure as code course.
+
+8
+00:00:18,006 --> 00:00:22,009
+So we're going to use IAC to deploy our applications as well.
+
+9
+00:00:22,009 --> 00:00:25,003
+In the cloud native ecosystem, Helm charts
+
+10
+00:00:25,003 --> 00:00:28,000
+are a popular way of deploying applications.
+
+11
+00:00:28,000 --> 00:00:30,007
+This is the Helm homepage, helm.sh.
+
+12
+00:00:30,007 --> 00:00:33,000
+Here you will find a lot of documentation
+
+13
+00:00:33,000 --> 00:00:36,005
+and resources to help you along your Helm journey.
+
+14
+00:00:36,005 --> 00:00:39,006
+I've already installed Helm on this server,
+
+15
+00:00:39,006 --> 00:00:44,003
+but the instructions to do that are in the course materials.
+
+16
+00:00:44,003 --> 00:00:46,008
+Now, there are a lot of Helm repositories out there
+
+17
+00:00:46,008 --> 00:00:49,002
+with ready to use charts already.
+
+18
+00:00:49,002 --> 00:00:55,004
+Here. I've added the Bitnami repository to our local.
+
+19
+00:00:55,004 --> 00:00:59,004
+And then we can search this repository
+
+20
+00:00:59,004 --> 00:01:02,007
+to see what all it has in it that we can use.
+
+21
+00:01:02,007 --> 00:01:05,005
+And as you can see, there are a lot of Helm charts
+
+22
+00:01:05,005 --> 00:01:07,007
+in here for open source projects.
+
+23
+00:01:07,007 --> 00:01:10,005
+Everything from Airflow and Apache,
+
+24
+00:01:10,005 --> 00:01:13,004
+down to WordPress and Zookeeper.
+
+25
+00:01:13,004 --> 00:01:16,002
+So let's download one and take a look at it.
+
+26
+00:01:16,002 --> 00:01:19,004
+Let's say the Nginx web server.
+
+27
+00:01:19,004 --> 00:01:23,005
+We can do that with helm pull,
+
+28
+00:01:23,005 --> 00:01:30,005
+and then the name of the Helm chart.
+
+29
+00:01:30,005 --> 00:01:33,006
+All right, so it downloads it as a TAR zipped file,
+
+30
+00:01:33,006 --> 00:01:40,007
+so we will unpack it.
+
+31
+00:01:40,007 --> 00:01:45,009
+So now if we go into our Helm chart directory
+
+32
+00:01:45,009 --> 00:01:47,007
+you could see a number of files.
+
+33
+00:01:47,007 --> 00:01:52,008
+So the values.yaml is very similar
+
+34
+00:01:52,008 --> 00:01:56,009
+to the terraform.tfvars file in that this
+
+35
+00:01:56,009 --> 00:02:02,003
+has a bunch of top-level settings to describe
+
+36
+00:02:02,003 --> 00:02:07,005
+how you want to configure your Nginx server.
+
+37
+00:02:07,005 --> 00:02:10,005
+It has a whole bunch of them because even a simple thing
+
+38
+00:02:10,005 --> 00:02:17,000
+like a web server, you can set a lot of different things.
+
+39
+00:02:17,000 --> 00:02:23,004
+Then inside the templates,
+
+40
+00:02:23,004 --> 00:02:27,001
+here you have a file for each kind of Kubernetes
+
+41
+00:02:27,001 --> 00:02:30,009
+component that has to be generated to deploy Nginx.
+
+42
+00:02:30,009 --> 00:02:34,005
+So it has here the configuration to make a deployment
+
+43
+00:02:34,005 --> 00:02:39,008
+and to make a service and to make a ingress controller,
+
+44
+00:02:39,008 --> 00:02:41,007
+all that good sort of thing.
+
+45
+00:02:41,007 --> 00:02:47,006
+So let's look at deployment.yaml.
+
+46
+00:02:47,006 --> 00:02:49,002
+All right, as you can see this,
+
+47
+00:02:49,002 --> 00:02:53,002
+it looks like a normal Kubernetes deployment
+
+48
+00:02:53,002 --> 00:02:57,001
+but it's full of all sorts of both including variables
+
+49
+00:02:57,001 --> 00:03:01,008
+and doing conditional logic on variables.
+
+50
+00:03:01,008 --> 00:03:04,004
+But you're probably feeling froggy by this point.
+
+51
+00:03:04,004 --> 00:03:07,002
+Who wants to deploy something pre-existing again?
+
+52
+00:03:07,002 --> 00:03:09,009
+So let's forget Nginx,
+
+53
+00:03:09,009 --> 00:03:12,004
+and let's make our own Helm chart.
+
+54
+00:03:12,004 --> 00:03:14,004
+And we'll use it to deploy James'
+
+55
+00:03:14,004 --> 00:03:17,001
+word cloud generator application.
+
+56
+00:03:17,001 --> 00:03:21,001
+So Helm can create a stub chart for us.
+
+57
+00:03:21,001 --> 00:03:30,001
+Let's ask it to create one called wordcloud.
+
+58
+00:03:30,001 --> 00:03:35,000
+All right, we go into the wordcloud Helm chart directory
+
+59
+00:03:35,000 --> 00:03:37,000
+and it looks like a stripped down version
+
+60
+00:03:37,000 --> 00:03:42,009
+of the Nginx one, which is actually exactly what it is.
+
+61
+00:03:42,009 --> 00:03:46,002
+So doesn't have all the bells and whistles
+
+62
+00:03:46,002 --> 00:03:52,002
+but it's essentially just deploying a Nginx web server
+
+63
+00:03:52,002 --> 00:03:54,007
+with all the components required to do that.
+
+64
+00:03:54,007 --> 00:03:59,001
+So let's change this to do what we want it to do.
+
+65
+00:03:59,001 --> 00:04:02,008
+So instead of installing Nginx, we're going to change
+
+66
+00:04:02,008 --> 00:04:12,001
+that to get James' word cloud generator.
+
+67
+00:04:12,001 --> 00:04:13,008
+And let's see, let's go ahead and change
+
+68
+00:04:13,008 --> 00:04:18,005
+the replica count to three so that we can have
+
+69
+00:04:18,005 --> 00:04:23,004
+three of these running instead of just one.
+
+70
+00:04:23,004 --> 00:04:28,000
+And then to make sure that we can expose it to the internet
+
+71
+00:04:28,000 --> 00:04:30,006
+we're going to go down here to the service
+
+72
+00:04:30,006 --> 00:04:36,007
+and we're going to change it to a load balancer.
+
+73
+00:04:36,007 --> 00:04:39,009
+And you may recall that James'
+
+74
+00:04:39,009 --> 00:04:43,004
+container listened on port 8888.
+
+75
+00:04:43,004 --> 00:04:47,001
+So that's what we'll go ahead and set.
+
+76
+00:04:47,001 --> 00:04:48,007
+And then you know how James
+
+77
+00:04:48,007 --> 00:04:51,006
+mentioned the different architectures?
+
+78
+00:04:51,006 --> 00:04:55,004
+So he uploaded a couple different versions
+
+79
+00:04:55,004 --> 00:04:58,003
+of this word cloud generator.
+
+80
+00:04:58,003 --> 00:05:05,001
+And so we're going to pull the tag for latest-amd64 so that
+
+81
+00:05:05,001 --> 00:05:09,004
+we make sure and get the AMD architecture version of it.
+
+82
+00:05:09,004 --> 00:05:12,001
+All right, we're done with that.
+
+83
+00:05:12,001 --> 00:05:16,004
+So first we're going to ask Helm to check our syntax,
+
+84
+00:05:16,004 --> 00:05:18,004
+make sure we didn't mess anything up.
+
+85
+00:05:18,004 --> 00:05:21,006
+My typing isn't what it used to be.
+
+86
+00:05:21,006 --> 00:05:22,007
+And it says it's fine.
+
+87
+00:05:22,007 --> 00:05:24,007
+It recommends us setting an icon somewhere
+
+88
+00:05:24,007 --> 00:05:27,001
+but we can ignore that.
+
+89
+00:05:27,001 --> 00:05:32,002
+And now we're going to essentially dry run this, have Helm
+
+90
+00:05:32,002 --> 00:05:35,004
+exercise it and see what it thinks it's going to do.
+
+91
+00:05:35,004 --> 00:05:37,001
+So for that we're going to use
+
+92
+00:05:37,001 --> 00:05:46,005
+helm template --validate --debug wordcloud.
+
+93
+00:05:46,005 --> 00:05:48,005
+So it's going to parse the Helm chart and say
+
+94
+00:05:48,005 --> 00:05:50,007
+these are the different things that I'm planning
+
+95
+00:05:50,007 --> 00:05:53,000
+on creating based on what you said.
+
+96
+00:05:53,000 --> 00:05:56,009
+You know, this deployment,
+
+97
+00:05:56,009 --> 00:05:58,003
+this pod.
+
+98
+00:05:58,003 --> 00:06:00,007
+And it all looks pretty good to me.
+
+99
+00:06:00,007 --> 00:06:04,002
+So we're going to tell Helm to go ahead and do this.
+
+100
+00:06:04,002 --> 00:06:07,006
+So with that, we use helm install.
+
+101
+00:06:07,006 --> 00:06:11,001
+We're going to call our application wordcloud.
+
+102
+00:06:11,001 --> 00:06:14,002
+We want it to pull the Helm chart from our little
+
+103
+00:06:14,002 --> 00:06:16,006
+wordcloud directory that we have here.
+
+104
+00:06:16,006 --> 00:06:20,002
+and we're going to specify the file to get the values
+
+105
+00:06:20,002 --> 00:06:26,005
+from which is of course, inward cloud, it's our values.yaml.
+
+106
+00:06:26,005 --> 00:06:28,008
+Then we run that.
+
+107
+00:06:28,008 --> 00:06:31,009
+And so it's going and installing the Helm chart
+
+108
+00:06:31,009 --> 00:06:34,003
+on our Kubernetes cluster and then creating
+
+109
+00:06:34,003 --> 00:06:36,005
+all of those different assets.
+
+110
+00:06:36,005 --> 00:06:39,009
+So now if we do a helm list,
+
+111
+00:06:39,009 --> 00:06:43,002
+it says hey I have an application called wordcloud
+
+112
+00:06:43,002 --> 00:06:46,003
+that the revision 1 has been deployed.
+
+113
+00:06:46,003 --> 00:06:51,009
+So let's take a look.
+
+114
+00:06:51,009 --> 00:06:54,006
+All right, we have three running pods.
+
+115
+00:06:54,006 --> 00:06:57,001
+We have a load balancer.
+
+116
+00:06:57,001 --> 00:06:59,009
+And we have a deployment and a replica set.
+
+117
+00:06:59,009 --> 00:07:01,007
+So that seems good.
+
+118
+00:07:01,007 --> 00:07:03,002
+Let's check it out.
+
+119
+00:07:03,002 --> 00:07:05,008
+So this is the name of the Amazon
+
+120
+00:07:05,008 --> 00:07:08,003
+Elastic Load Balancer that it created.
+
+121
+00:07:08,003 --> 00:07:11,005
+This should be accessible from the internet.
+
+122
+00:07:11,005 --> 00:07:16,006
+So first, let's quick check it from local.
+
+123
+00:07:16,006 --> 00:07:22,002
+We're going to curl just the headers.
+
+124
+00:07:22,002 --> 00:07:28,005
+And don't forget, we need the port 8888.
+
+125
+00:07:28,005 --> 00:07:30,007
+Ah, and we're getting a response.
+
+126
+00:07:30,007 --> 00:07:32,004
+That's nice.
+
+127
+00:07:32,004 --> 00:07:41,001
+So now let's get fancy and try running this in a browser.
+
+128
+00:07:41,001 --> 00:07:45,009
+All right, so I'm using Google Chrome.
+
+129
+00:07:45,009 --> 00:07:51,008
+We're going to put in that ELB address with port 8888.
+
+130
+00:07:51,008 --> 00:08:04,008
+And it looks like we've got his word cloud app.
+
+131
+00:08:04,008 --> 00:08:06,006
+A word cloud.
+
+132
+00:08:06,006 --> 00:08:08,007
+Outstanding.
+
+133
+00:08:08,007 --> 00:08:09,006
+And there we go.
+
+134
+00:08:09,006 --> 00:08:12,000
+A working application live on the internet
+
+135
+00:08:12,000 --> 00:08:14,007
+set up with resilience in a Kubernetes cluster.
+
+136
+00:08:14,007 --> 00:08:19,001
+And we built each layer using infrastructure as code.
+
+137
+00:08:19,001 --> 00:08:21,006
+One parting note, you've seen how much the community
+
+138
+00:08:21,006 --> 00:08:24,006
+is already created out there in GitHub,
+
+139
+00:08:24,006 --> 00:08:27,007
+Docker Hub, the Terraform Registry of Modules,
+
+140
+00:08:27,007 --> 00:08:31,006
+Helm repositories, all great learning resources.
+
+141
+00:08:31,006 --> 00:08:34,004
+Don't just copy and use things blindly,
+
+142
+00:08:34,004 --> 00:08:38,002
+but don't be afraid of reusing and eventually contributing
+
+143
+00:08:38,002 --> 00:08:41,000
+to these high quality community assets.
+

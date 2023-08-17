@@ -1,0 +1,356 @@
+1
+00:00:00,006 --> 00:00:01,009
+- By now in the course,
+
+2
+00:00:01,009 --> 00:00:03,002
+you've seen how our ability
+
+3
+00:00:03,002 --> 00:00:06,000
+to use infrastructure as code is influenced
+
+4
+00:00:06,000 --> 00:00:09,002
+by the kind of systems we're automating, whether cloud
+
+5
+00:00:09,002 --> 00:00:12,003
+or virtual machines or containers or serverless.
+
+6
+00:00:12,003 --> 00:00:14,009
+- We've also walked through some examples using technologies
+
+7
+00:00:14,009 --> 00:00:19,004
+like Docker, AWS, Kubernetes, and Terraform.
+
+8
+00:00:19,004 --> 00:00:21,006
+But we really haven't addressed the implications
+
+9
+00:00:21,006 --> 00:00:24,003
+of infrastructure as code.
+
+10
+00:00:24,003 --> 00:00:26,007
+- What is this tangled web you weave, James?
+
+11
+00:00:26,007 --> 00:00:28,002
+- No, no, hear me out, Ernest.
+
+12
+00:00:28,002 --> 00:00:30,009
+Yes, we've seen our infrastructure in code
+
+13
+00:00:30,009 --> 00:00:33,006
+but there are a set of principles and practices that result
+
+14
+00:00:33,006 --> 00:00:36,005
+from treating our infrastructure as code.
+
+15
+00:00:36,005 --> 00:00:38,007
+- Okay, I'll allow it.
+
+16
+00:00:38,007 --> 00:00:39,008
+- In the next few videos,
+
+17
+00:00:39,008 --> 00:00:42,003
+we'll cover how treating infrastructure as code
+
+18
+00:00:42,003 --> 00:00:44,001
+means we can do all the things that we can do
+
+19
+00:00:44,001 --> 00:00:47,006
+for application code, but for our infrastructure.
+
+20
+00:00:47,006 --> 00:00:50,006
+- In the "Infrastructure as Code" book by Keif Morris,
+
+21
+00:00:50,006 --> 00:00:53,000
+he defines infrastructure as code
+
+22
+00:00:53,000 --> 00:00:56,001
+as an approach to infrastructure automation based
+
+23
+00:00:56,001 --> 00:00:58,008
+on practices from software development.
+
+24
+00:00:58,008 --> 00:01:02,002
+The emphasis is on consistent repeatable code
+
+25
+00:01:02,002 --> 00:01:04,003
+for provisioning and changing systems
+
+26
+00:01:04,003 --> 00:01:06,001
+and their configuration.
+
+27
+00:01:06,001 --> 00:01:07,008
+- So far, we've shown you how everything
+
+28
+00:01:07,008 --> 00:01:10,004
+in your infrastructure can be controlled by code
+
+29
+00:01:10,004 --> 00:01:12,004
+and represented in code.
+
+30
+00:01:12,004 --> 00:01:15,009
+But what does it mean to be treated as code?
+
+31
+00:01:15,009 --> 00:01:17,008
+- We have a saying in DevOps,
+
+32
+00:01:17,008 --> 00:01:20,003
+servers should be cattle, not pets.
+
+33
+00:01:20,003 --> 00:01:24,000
+You don't handcraft them and cater to their unique needs.
+
+34
+00:01:24,000 --> 00:01:27,002
+You mass produce them using a standard mechanism,
+
+35
+00:01:27,002 --> 00:01:29,000
+kill them and get more.
+
+36
+00:01:29,000 --> 00:01:32,005
+Leave the cool customizations for the back of your laptop.
+
+37
+00:01:32,005 --> 00:01:34,005
+- So infrastructure as code
+
+38
+00:01:34,005 --> 00:01:36,006
+is about adopting a development approach
+
+39
+00:01:36,006 --> 00:01:37,008
+to your infrastructure
+
+40
+00:01:37,008 --> 00:01:41,004
+and it's a cultural change more than a technical one.
+
+41
+00:01:41,004 --> 00:01:42,006
+- It's hard to wean yourself
+
+42
+00:01:42,006 --> 00:01:46,003
+from the tendency to log into the server and change it
+
+43
+00:01:46,003 --> 00:01:48,000
+but you'll have to.
+
+44
+00:01:48,000 --> 00:01:49,004
+Like fixing a code bug,
+
+45
+00:01:49,004 --> 00:01:53,007
+you'll change the code, build it, test it, and deploy it.
+
+46
+00:01:53,007 --> 00:01:55,006
+- When Ernest and I first worked together.
+
+47
+00:01:55,006 --> 00:01:57,003
+- At the dawn of computing.
+
+48
+00:01:57,003 --> 00:01:58,001
+- Yeah.
+
+49
+00:01:58,001 --> 00:02:02,003
+It was on a web team without any build automation.
+
+50
+00:02:02,003 --> 00:02:06,000
+Creating new systems was a 100-item manual checklist.
+
+51
+00:02:06,000 --> 00:02:08,006
+System changes and app deploys were done manually
+
+52
+00:02:08,006 --> 00:02:10,009
+during releases and documented in one
+
+53
+00:02:10,009 --> 00:02:13,002
+of those write-only change management systems
+
+54
+00:02:13,002 --> 00:02:15,000
+that, you know, enterprises love.
+
+55
+00:02:15,000 --> 00:02:17,002
+- So after a while, the configuration
+
+56
+00:02:17,002 --> 00:02:21,001
+of any given box was totally unreproducible.
+
+57
+00:02:21,001 --> 00:02:23,006
+Boxes that should have been identical weren't
+
+58
+00:02:23,006 --> 00:02:26,001
+and troubleshooting the many production issues
+
+59
+00:02:26,001 --> 00:02:28,008
+was a time consuming and difficult job.
+
+60
+00:02:28,008 --> 00:02:31,003
+- Some weeks of on-call rotation, I would get
+
+61
+00:02:31,003 --> 00:02:33,001
+like hundreds of alerts and pages
+
+62
+00:02:33,001 --> 00:02:36,008
+of all these problems in a really complex environment.
+
+63
+00:02:36,008 --> 00:02:38,006
+- Yeah, we lost at least one pager
+
+64
+00:02:38,006 --> 00:02:41,007
+from an on-call pager rage incident for sure.
+
+65
+00:02:41,007 --> 00:02:43,005
+- That wasn't me, you know,
+
+66
+00:02:43,005 --> 00:02:46,005
+but so later when we formed a new team
+
+67
+00:02:46,005 --> 00:02:48,009
+that we were building cloud-based SaaS products,
+
+68
+00:02:48,009 --> 00:02:50,007
+we agreed that our first priority
+
+69
+00:02:50,007 --> 00:02:52,001
+had to be the implementation
+
+70
+00:02:52,001 --> 00:02:55,001
+of a model-driven system that we would use to create
+
+71
+00:02:55,001 --> 00:02:57,007
+and operate our systems and applications.
+
+72
+00:02:57,007 --> 00:02:58,006
+Even though, you know,
+
+73
+00:02:58,006 --> 00:03:01,005
+we knew it was going to take more time to get going.
+
+74
+00:03:01,005 --> 00:03:04,006
+- We built a tool that would simply take models that devs
+
+75
+00:03:04,006 --> 00:03:08,004
+and ops collaborated on in source control, instantiate them
+
+76
+00:03:08,004 --> 00:03:11,004
+in the Amazon and Azure Clouds, deploy code
+
+77
+00:03:11,004 --> 00:03:14,004
+and dynamically hook up services to each other
+
+78
+00:03:14,004 --> 00:03:17,007
+in a pre-production environment first for testing naturally.
+
+79
+00:03:17,007 --> 00:03:19,008
+- The difference was amazing.
+
+80
+00:03:19,008 --> 00:03:23,003
+Suddenly operations became a nine to five job
+
+81
+00:03:23,003 --> 00:03:26,000
+and even our time at work was, you know, focused more
+
+82
+00:03:26,000 --> 00:03:28,000
+on design and implementation rather
+
+83
+00:03:28,000 --> 00:03:31,006
+than in firefighting and doing manual changes.
+
+84
+00:03:31,006 --> 00:03:33,009
+- In treating our infrastructure like it was code
+
+85
+00:03:33,009 --> 00:03:36,003
+was the secret sauce that made it work.
+
+86
+00:03:36,003 --> 00:03:39,008
+- Now, over the next few videos, we discuss how that works
+
+87
+00:03:39,008 --> 00:03:43,004
+in practice as we touch on version control, artifacts,
+
+88
+00:03:43,004 --> 00:03:47,001
+testing, using CI/CD and organizing our teams
+
+89
+00:03:47,001 --> 00:03:50,000
+around the patterns and principles that developers use.
+

@@ -1,0 +1,584 @@
+1
+00:00:00,006 --> 00:00:02,007
+- [Instructor] Welcome to "The Provisioning Lab."
+
+2
+00:00:02,007 --> 00:00:05,003
+If you already know how to use Amazon Web Services,
+
+3
+00:00:05,003 --> 00:00:07,002
+you can skip to the next video,
+
+4
+00:00:07,002 --> 00:00:09,006
+but I wanted to make sure that everyone's following along
+
+5
+00:00:09,006 --> 00:00:11,009
+when we make our infrastructure in Terraform
+
+6
+00:00:11,009 --> 00:00:14,006
+and go into AWS to inspect it.
+
+7
+00:00:14,006 --> 00:00:17,004
+Here, we're at the Amazon Web Services homepage,
+
+8
+00:00:17,004 --> 00:00:20,003
+aws.amazon.com.
+
+9
+00:00:20,003 --> 00:00:23,002
+If you haven't created an AWS account yet,
+
+10
+00:00:23,002 --> 00:00:25,007
+this orange button in the top right will offer you
+
+11
+00:00:25,007 --> 00:00:28,008
+a "Create a new AWS account" option.
+
+12
+00:00:28,008 --> 00:00:30,006
+In my case, my Alexa's been listening
+
+13
+00:00:30,006 --> 00:00:33,003
+to my every word and knows that I already have one,
+
+14
+00:00:33,003 --> 00:00:36,002
+so it just tells me to log onto the console.
+
+15
+00:00:36,002 --> 00:00:39,007
+That's just a little joke, Alexa. Please don't hurt me.
+
+16
+00:00:39,007 --> 00:00:42,002
+So now, we're in the AWS console.
+
+17
+00:00:42,002 --> 00:00:44,006
+Most things you can do in here you can also do
+
+18
+00:00:44,006 --> 00:00:48,006
+via the AWS Command Line Interface tool or the API,
+
+19
+00:00:48,006 --> 00:00:50,009
+but it's easier to illustrate visually here,
+
+20
+00:00:50,009 --> 00:00:54,005
+so we'll leave the CLI and API for later.
+
+21
+00:00:54,005 --> 00:00:57,009
+Remember, this lab isn't a full walkthrough of AWS,
+
+22
+00:00:57,009 --> 00:00:59,003
+but if you've just signed up
+
+23
+00:00:59,003 --> 00:01:04,001
+for an AWS account and you're logged in as the root account,
+
+24
+00:01:04,001 --> 00:01:07,009
+you're going to want to go into Security Credentials,
+
+25
+00:01:07,009 --> 00:01:12,002
+set up multifactor authentication on that account,
+
+26
+00:01:12,002 --> 00:01:15,001
+create a new IAM admin account,
+
+27
+00:01:15,001 --> 00:01:16,008
+I've made one called "emueller"
+
+28
+00:01:16,008 --> 00:01:19,003
+that I've given administrative rights,
+
+29
+00:01:19,003 --> 00:01:21,008
+and then log out as the root account,
+
+30
+00:01:21,008 --> 00:01:25,006
+log in as your new IM admin account,
+
+31
+00:01:25,006 --> 00:01:28,004
+set up multifactor authentication on that,
+
+32
+00:01:28,004 --> 00:01:29,003
+and then you can set
+
+33
+00:01:29,003 --> 00:01:31,000
+up the access keys that you're going to use
+
+34
+00:01:31,000 --> 00:01:33,008
+to programmatically access your account
+
+35
+00:01:33,008 --> 00:01:35,006
+over the course of the lab,
+
+36
+00:01:35,006 --> 00:01:36,009
+but using the root account
+
+37
+00:01:36,009 --> 00:01:39,007
+is the number one security risk in AWS.
+
+38
+00:01:39,007 --> 00:01:41,001
+You're going to want to lock that one away
+
+39
+00:01:41,001 --> 00:01:42,009
+in a box for a rainy day.
+
+40
+00:01:42,009 --> 00:01:45,002
+The number two security risk is not
+
+41
+00:01:45,002 --> 00:01:47,009
+having multifactor authentication set up on your accounts.
+
+42
+00:01:47,009 --> 00:01:51,007
+So, make sure and do those two things before we get started.
+
+43
+00:01:51,007 --> 00:01:55,007
+Here's the massive list of services available in AWS.
+
+44
+00:01:55,007 --> 00:02:00,007
+Everything from compute and storage and online databases,
+
+45
+00:02:00,007 --> 00:02:04,008
+to fancier things like machine learning services,
+
+46
+00:02:04,008 --> 00:02:08,007
+game development, all sorts of things,
+
+47
+00:02:08,007 --> 00:02:13,000
+but what we're going to go look at is under Compute.
+
+48
+00:02:13,000 --> 00:02:16,005
+EC2, which stands for Elastic Compute Cloud,
+
+49
+00:02:16,005 --> 00:02:20,006
+this is where you go to run virtual servers in the cloud.
+
+50
+00:02:20,006 --> 00:02:22,007
+So, there's only so easy
+
+51
+00:02:22,007 --> 00:02:25,009
+that Amazon can make running a server,
+
+52
+00:02:25,009 --> 00:02:28,007
+so you'll see here in the sidebar all sorts
+
+53
+00:02:28,007 --> 00:02:33,003
+of options for manipulating images, storage, networking,
+
+54
+00:02:33,003 --> 00:02:35,003
+security, and so on,
+
+55
+00:02:35,003 --> 00:02:38,000
+but you can get started with just saying defaults.
+
+56
+00:02:38,000 --> 00:02:40,002
+So, I'm going to show you how easy it is to start
+
+57
+00:02:40,002 --> 00:02:43,003
+a virtual server in the cloud.
+
+58
+00:02:43,003 --> 00:02:46,009
+First, go to this pop down in the top right
+
+59
+00:02:46,009 --> 00:02:49,007
+and pick a geographic region that you want
+
+60
+00:02:49,007 --> 00:02:50,009
+to run your server in
+
+61
+00:02:50,009 --> 00:02:53,008
+and switch to that region in the console.
+
+62
+00:02:53,008 --> 00:02:56,008
+I'm going to choose Oregon because I hear
+
+63
+00:02:56,008 --> 00:02:58,001
+that the data centers there
+
+64
+00:02:58,001 --> 00:03:00,001
+are outstanding in their field.
+
+65
+00:03:00,001 --> 00:03:02,007
+(Instructor snickering)
+
+66
+00:03:02,007 --> 00:03:05,001
+Okay, back to the console.
+
+67
+00:03:05,001 --> 00:03:08,002
+So, the Instances section is where you see
+
+68
+00:03:08,002 --> 00:03:10,004
+any servers that you have running.
+
+69
+00:03:10,004 --> 00:03:12,001
+We don't have any right now.
+
+70
+00:03:12,001 --> 00:03:15,007
+So, I'm going to go up to "Launch Instances,"
+
+71
+00:03:15,007 --> 00:03:19,006
+which is going to open up our little wizard
+
+72
+00:03:19,006 --> 00:03:22,008
+that they have for you to run a new server.
+
+73
+00:03:22,008 --> 00:03:24,005
+First thing, we're going to name it.
+
+74
+00:03:24,005 --> 00:03:27,001
+I'll just call it "Test Server."
+
+75
+00:03:27,001 --> 00:03:29,007
+Next, you pick an image to start it from.
+
+76
+00:03:29,007 --> 00:03:33,008
+There are all of the common operating systems represented,
+
+77
+00:03:33,008 --> 00:03:36,009
+thousands of community-contributed images,
+
+78
+00:03:36,009 --> 00:03:39,001
+and you can even create your own.
+
+79
+00:03:39,001 --> 00:03:42,006
+I'm going to pick Ubuntu 22.04.
+
+80
+00:03:42,006 --> 00:03:44,004
+Then, you pick an instance type.
+
+81
+00:03:44,004 --> 00:03:46,008
+This is essentially the hardware size
+
+82
+00:03:46,008 --> 00:03:49,004
+of the virtual server you're going to make.
+
+83
+00:03:49,004 --> 00:03:54,006
+This can be anything from a tiny micro instance on
+
+84
+00:03:54,006 --> 00:03:56,007
+through a bunch of larger options
+
+85
+00:03:56,007 --> 00:04:02,004
+and then all the way down to giant, bare-metal instances
+
+86
+00:04:02,004 --> 00:04:06,009
+with 48 CPUs and 384 gigs of memory.
+
+87
+00:04:06,009 --> 00:04:08,006
+This is running on my credit card,
+
+88
+00:04:08,006 --> 00:04:11,001
+so we're going to go for the small one.
+
+89
+00:04:11,001 --> 00:04:13,008
+So next, I'm going to pick an SSH key pair
+
+90
+00:04:13,008 --> 00:04:16,001
+to use to connect to the instance.
+
+91
+00:04:16,001 --> 00:04:17,004
+Now, I'm cheating a little bit
+
+92
+00:04:17,004 --> 00:04:21,007
+because you have to create this locally and then import it,
+
+93
+00:04:21,007 --> 00:04:25,002
+but instructions for that are in the lab materials.
+
+94
+00:04:25,002 --> 00:04:29,000
+Then, you set up any other options like network security.
+
+95
+00:04:29,000 --> 00:04:30,008
+I'm going to let us SSH
+
+96
+00:04:30,008 --> 00:04:34,004
+in from anywhere to make it easy to connect,
+
+97
+00:04:34,004 --> 00:04:36,005
+and then you have a bunch of other options,
+
+98
+00:04:36,005 --> 00:04:39,000
+how much storage, advanced details,
+
+99
+00:04:39,000 --> 00:04:40,007
+but I'm just going to take the defaults,
+
+100
+00:04:40,007 --> 00:04:46,004
+and then we go over here and we say "Launch Instance,"
+
+101
+00:04:46,004 --> 00:04:50,009
+and it says it has started to launch it.
+
+102
+00:04:50,009 --> 00:04:53,005
+You can see it's impending state.
+
+103
+00:04:53,005 --> 00:04:54,008
+When you click on it,
+
+104
+00:04:54,008 --> 00:04:58,004
+you can go in and see all sorts of other details,
+
+105
+00:04:58,004 --> 00:05:00,006
+especially the public IP address
+
+106
+00:05:00,006 --> 00:05:03,000
+that it's going to be available at.
+
+107
+00:05:03,000 --> 00:05:03,008
+Go check.
+
+108
+00:05:03,008 --> 00:05:08,002
+Sure enough, it made an eight-gigabyte disc for the storage.
+
+109
+00:05:08,002 --> 00:05:10,009
+You can look at your other security
+
+110
+00:05:10,009 --> 00:05:14,001
+and networking settings, and look,
+
+111
+00:05:14,001 --> 00:05:16,005
+it's already in running state.
+
+112
+00:05:16,005 --> 00:05:20,008
+That is super quick, and to prove it, let's connect to it.
+
+113
+00:05:20,008 --> 00:05:23,005
+I'm going to connect to it from the console.
+
+114
+00:05:23,005 --> 00:05:30,003
+We could do it via SSH, but this is quick and easy.
+
+115
+00:05:30,003 --> 00:05:31,009
+So, we'll connect in.
+
+116
+00:05:31,009 --> 00:05:34,006
+It's going to load up a virtual terminal here
+
+117
+00:05:34,006 --> 00:05:37,002
+in the web browser,
+
+118
+00:05:37,002 --> 00:05:38,003
+and here we are.
+
+119
+00:05:38,003 --> 00:05:41,003
+We are at the command line
+
+120
+00:05:41,003 --> 00:05:45,001
+of our very own brand new Ubuntu server.
+
+121
+00:05:45,001 --> 00:05:46,005
+That's faster than it'd take you to look
+
+122
+00:05:46,005 --> 00:05:49,001
+up Dell's phone number to order one.
+
+123
+00:05:49,001 --> 00:05:51,000
+Alright, so are you done with it?
+
+124
+00:05:51,000 --> 00:05:52,006
+Well, that's easy enough.
+
+125
+00:05:52,006 --> 00:05:56,005
+We'll go back here to the EC2 console,
+
+126
+00:05:56,005 --> 00:06:00,003
+and you can stop
+
+127
+00:06:00,003 --> 00:06:01,006
+and start the instance,
+
+128
+00:06:01,006 --> 00:06:06,004
+which is like powering it down and booting it back up again.
+
+129
+00:06:06,004 --> 00:06:07,009
+While it's powered down,
+
+130
+00:06:07,009 --> 00:06:09,008
+it's not incurring the charges
+
+131
+00:06:09,008 --> 00:06:12,001
+for the actual virtual server,
+
+132
+00:06:12,001 --> 00:06:13,005
+although there are still some charges
+
+133
+00:06:13,005 --> 00:06:15,006
+for keeping the disc alive,
+
+134
+00:06:15,006 --> 00:06:20,003
+but we're going to terminate it, completely destroy it.
+
+135
+00:06:20,003 --> 00:06:22,002
+So, it's going to warn us and say, hey,
+
+136
+00:06:22,002 --> 00:06:25,009
+whatever you have on that disc drive is going to go away,
+
+137
+00:06:25,009 --> 00:06:29,004
+and we say, that's fine.
+
+138
+00:06:29,004 --> 00:06:32,006
+It goes into shutting down mode,
+
+139
+00:06:32,006 --> 00:06:35,000
+and then, in less than a minute,
+
+140
+00:06:35,000 --> 00:06:37,006
+it will go in to terminate it and it'll be gone.
+
+141
+00:06:37,006 --> 00:06:38,008
+So, that's the cloud,
+
+142
+00:06:38,008 --> 00:06:41,004
+and that's how quickly you can get compute resources,
+
+143
+00:06:41,004 --> 00:06:44,008
+just as much as you need for just as long as you need it,
+
+144
+00:06:44,008 --> 00:06:46,006
+which is perfect for automation.
+
+145
+00:06:46,006 --> 00:06:48,009
+So next video, we're going to build some infrastructure
+
+146
+00:06:48,009 --> 00:06:51,000
+at scale with Terraform.
+

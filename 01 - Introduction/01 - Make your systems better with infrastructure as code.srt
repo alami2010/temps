@@ -1,0 +1,100 @@
+1
+00:00:00,001 --> 00:00:03,005
+- If you work in tech, you've probably either spent hours
+
+2
+00:00:03,005 --> 00:00:05,000
+building systems by hand
+
+3
+00:00:05,000 --> 00:00:06,007
+- Or waited weeks for someone else
+
+4
+00:00:06,007 --> 00:00:08,002
+to build those systems for you.
+
+5
+00:00:08,002 --> 00:00:09,009
+- Slow and unreliable.
+
+6
+00:00:09,009 --> 00:00:11,000
+What could be better?
+
+7
+00:00:11,000 --> 00:00:13,008
+- Well, today's systems demand a modern solution.
+
+8
+00:00:13,008 --> 00:00:15,002
+What you need is
+
+9
+00:00:15,002 --> 00:00:17,004
+- [Together] infrastructure as code.
+
+10
+00:00:17,004 --> 00:00:19,000
+- Howdy, I'm Ernest Mueller.
+
+11
+00:00:19,000 --> 00:00:20,004
+- And I'm James Wickett.
+
+12
+00:00:20,004 --> 00:00:22,004
+- We first met while implementing DevOps
+
+13
+00:00:22,004 --> 00:00:23,005
+at a large enterprise.
+
+14
+00:00:23,005 --> 00:00:25,004
+- And we've been friends ever since.
+
+15
+00:00:25,004 --> 00:00:27,006
+We both feel that infrastructure as code
+
+16
+00:00:27,006 --> 00:00:30,000
+is one of the fundamental practice areas of DevOps
+
+17
+00:00:30,000 --> 00:00:32,001
+and one of the most revolutionary.
+
+18
+00:00:32,001 --> 00:00:34,005
+- With IAC, as the kids call it,
+
+19
+00:00:34,005 --> 00:00:36,007
+you can generate high quality systems
+
+20
+00:00:36,007 --> 00:00:40,001
+that you can reliably test, consistently reproduce,
+
+21
+00:00:40,001 --> 00:00:42,002
+and change quickly and safely.
+
+22
+00:00:42,002 --> 00:00:44,003
+- Our course will teach you all the tools,
+
+23
+00:00:44,003 --> 00:00:46,004
+tips and techniques that we've learned over the years
+
+24
+00:00:46,004 --> 00:00:48,003
+to get infrastructure as code right.
+
+25
+00:00:48,003 --> 00:00:49,000
+- So let's start automating.
+

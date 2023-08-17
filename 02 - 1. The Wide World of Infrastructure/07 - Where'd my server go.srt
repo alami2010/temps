@@ -1,0 +1,336 @@
+1
+00:00:00,006 --> 00:00:05,003
+- Let's move one layer past containers to serverless.
+
+2
+00:00:05,003 --> 00:00:08,005
+Serverless computing is something you may have heard about
+
+3
+00:00:08,005 --> 00:00:10,003
+but haven't tried out.
+
+4
+00:00:10,003 --> 00:00:11,005
+In this session,
+
+5
+00:00:11,005 --> 00:00:13,007
+we're going to demystify the term serverless
+
+6
+00:00:13,007 --> 00:00:16,005
+and dive into how it works.
+
+7
+00:00:16,005 --> 00:00:17,009
+The term serverless,
+
+8
+00:00:17,009 --> 00:00:20,000
+it doesn't mean that there's not a server
+
+9
+00:00:20,000 --> 00:00:21,003
+in there somewhere.
+
+10
+00:00:21,003 --> 00:00:23,003
+It just means that you don't have to interact
+
+11
+00:00:23,003 --> 00:00:24,007
+with it yourself.
+
+12
+00:00:24,007 --> 00:00:27,006
+Some managed services bill themselves as serverless
+
+13
+00:00:27,006 --> 00:00:29,003
+once they get to the level where you don't need
+
+14
+00:00:29,003 --> 00:00:33,000
+to configure system parameters or stuff like that yourself.
+
+15
+00:00:33,000 --> 00:00:35,008
+Some cloud databases and data pipeline services
+
+16
+00:00:35,008 --> 00:00:39,000
+are frequently billed as serverless, but the real heart
+
+17
+00:00:39,000 --> 00:00:45,004
+of serverless computing is functions as a service or FaaS.
+
+18
+00:00:45,004 --> 00:00:48,000
+Some examples of public cloud FaaS offerings
+
+19
+00:00:48,000 --> 00:00:51,005
+are Amazon Lambda, Google Cloud Functions,
+
+20
+00:00:51,005 --> 00:00:53,008
+and Azure Functions.
+
+21
+00:00:53,008 --> 00:00:56,001
+There are also open-source serverless platforms
+
+22
+00:00:56,001 --> 00:00:57,000
+that you have to install
+
+23
+00:00:57,000 --> 00:00:59,000
+and do some of the server part yourself
+
+24
+00:00:59,000 --> 00:01:03,006
+like Apache OpenWhisk, OpenFaaS, and Knative.
+
+25
+00:01:03,006 --> 00:01:05,008
+These usually work on top of Kubernetes
+
+26
+00:01:05,008 --> 00:01:08,004
+or other container platforms.
+
+27
+00:01:08,004 --> 00:01:11,009
+Well, let's explain this with an example architecture.
+
+28
+00:01:11,009 --> 00:01:15,000
+On the left is a traditional web application architecture.
+
+29
+00:01:15,000 --> 00:01:17,007
+A client talks literally to the web stack,
+
+30
+00:01:17,007 --> 00:01:19,003
+and the web servers are running
+
+31
+00:01:19,003 --> 00:01:21,008
+any number of services on them.
+
+32
+00:01:21,008 --> 00:01:24,000
+On the right is a serverless architecture.
+
+33
+00:01:24,000 --> 00:01:26,006
+You decompose the services into functions
+
+34
+00:01:26,006 --> 00:01:29,002
+with no central web server to speak of
+
+35
+00:01:29,002 --> 00:01:33,003
+as all of its roles and duties are now distributed.
+
+36
+00:01:33,003 --> 00:01:34,006
+Under the hood,
+
+37
+00:01:34,006 --> 00:01:36,009
+these functions are containers that get spun up
+
+38
+00:01:36,009 --> 00:01:39,009
+in milliseconds on a read-only file system
+
+39
+00:01:39,009 --> 00:01:41,005
+when they're requested.
+
+40
+00:01:41,005 --> 00:01:43,005
+They execute the event that is given to them,
+
+41
+00:01:43,005 --> 00:01:45,008
+and then they just disappear.
+
+42
+00:01:45,008 --> 00:01:48,009
+So you don't have persistently running servers,
+
+43
+00:01:48,009 --> 00:01:51,005
+you just have zero to many running invocations
+
+44
+00:01:51,005 --> 00:01:53,007
+of your function.
+
+45
+00:01:53,007 --> 00:01:56,008
+I find it helps to think about serverless like this.
+
+46
+00:01:56,008 --> 00:01:58,005
+Serverless encourages functions
+
+47
+00:01:58,005 --> 00:02:01,007
+as deploy units coupled with third-party services
+
+48
+00:02:01,007 --> 00:02:04,002
+that allow running end-to-end applications
+
+49
+00:02:04,002 --> 00:02:07,008
+without worrying about any of the system operation.
+
+50
+00:02:07,008 --> 00:02:10,008
+Since the functions are backed by come-and-go containers,
+
+51
+00:02:10,008 --> 00:02:13,003
+this begs the question of how do serverless functions
+
+52
+00:02:13,003 --> 00:02:15,005
+get instantiated or triggered?
+
+53
+00:02:15,005 --> 00:02:17,004
+And that's a good question.
+
+54
+00:02:17,004 --> 00:02:19,005
+You know, when serverless first came out,
+
+55
+00:02:19,005 --> 00:02:22,004
+it was often just being used to do event handling.
+
+56
+00:02:22,004 --> 00:02:24,006
+So you would upload a file, for example,
+
+57
+00:02:24,006 --> 00:02:27,004
+and that would trigger a function to process it.
+
+58
+00:02:27,004 --> 00:02:30,000
+So early Lambdas often did simple operations
+
+59
+00:02:30,000 --> 00:02:34,001
+like compressing a file or converting a file format.
+
+60
+00:02:34,001 --> 00:02:37,004
+But it wasn't too long before all that changed due
+
+61
+00:02:37,004 --> 00:02:40,007
+to the fact that these functions were ready in milliseconds
+
+62
+00:02:40,007 --> 00:02:44,003
+and the fact that HTTP traffic is just a series
+
+63
+00:02:44,003 --> 00:02:45,007
+of small events,
+
+64
+00:02:45,007 --> 00:02:48,000
+the industry started creating web applications
+
+65
+00:02:48,000 --> 00:02:50,003
+using a serverless architecture.
+
+66
+00:02:50,003 --> 00:02:53,003
+So here's an example of a serverless application composed
+
+67
+00:02:53,003 --> 00:02:56,002
+of serverless functions in AWS.
+
+68
+00:02:56,002 --> 00:02:58,008
+It's based on a real insurance underwriting application
+
+69
+00:02:58,008 --> 00:03:02,005
+that Ernest worked on that was completely serverless.
+
+70
+00:03:02,005 --> 00:03:05,009
+Web requests fired from a front end react application,
+
+71
+00:03:05,009 --> 00:03:07,007
+and they came in through an API gateway
+
+72
+00:03:07,007 --> 00:03:10,009
+to trigger specific functions like log in,
+
+73
+00:03:10,009 --> 00:03:14,004
+generating new contract, viewing existing contracts
+
+74
+00:03:14,004 --> 00:03:15,007
+and so on.
+
+75
+00:03:15,007 --> 00:03:19,002
+Individual dedicated chunks of code, perform operations
+
+76
+00:03:19,002 --> 00:03:22,008
+like saving information, generating a price quote,
+
+77
+00:03:22,008 --> 00:03:27,001
+creating a pdf, and emailing the potential client.
+
+78
+00:03:27,001 --> 00:03:31,001
+It breaks down every API into a set of serverless functions
+
+79
+00:03:31,001 --> 00:03:33,000
+and calls out to external services
+
+80
+00:03:33,000 --> 00:03:35,005
+like an accounting system and a database.
+
+81
+00:03:35,005 --> 00:03:38,003
+In this way, you can build large complex systems
+
+82
+00:03:38,003 --> 00:03:41,004
+without having to build or manage servers.
+
+83
+00:03:41,004 --> 00:03:43,006
+That sounds too good to be true, doesn't it?
+
+84
+00:03:43,006 --> 00:03:46,000
+Well, in the next video we'll talk about that.
+

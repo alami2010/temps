@@ -1,0 +1,600 @@
+1
+00:00:00,003 --> 00:00:03,006
+- I declare that the system should exist.
+
+2
+00:00:03,006 --> 00:00:04,009
+- It doesn't work that way.
+
+3
+00:00:04,009 --> 00:00:06,009
+- Ah, but I declared it!
+
+4
+00:00:06,009 --> 00:00:09,005
+- It's imperative we stopped messing around.
+
+5
+00:00:09,005 --> 00:00:11,003
+- Ah, I see what you did there.
+
+6
+00:00:11,003 --> 00:00:14,006
+- [Announcer] Declarative versus Imperative, fight!
+
+7
+00:00:14,006 --> 00:00:15,007
+- There are two main options
+
+8
+00:00:15,007 --> 00:00:18,003
+for how a configuration management system works:
+
+9
+00:00:18,003 --> 00:00:20,006
+declarative and imperative.
+
+10
+00:00:20,006 --> 00:00:21,009
+In a declarative approach,
+
+11
+00:00:21,009 --> 00:00:24,001
+developers specify the desired state
+
+12
+00:00:24,001 --> 00:00:25,009
+and let configuration management
+
+13
+00:00:25,009 --> 00:00:28,002
+determine how best to achieve it.
+
+14
+00:00:28,002 --> 00:00:30,004
+"Chef" and "Puppet" are declarative tools.
+
+15
+00:00:30,004 --> 00:00:32,004
+You say, I want this package installed
+
+16
+00:00:32,004 --> 00:00:34,001
+and the recipes are written in a way
+
+17
+00:00:34,001 --> 00:00:36,009
+where they'll check if the system is already configured,
+
+18
+00:00:36,009 --> 00:00:38,006
+and, if not, it'll change it.
+
+19
+00:00:38,006 --> 00:00:40,006
+And it'll keep on running to try to get it that way
+
+20
+00:00:40,006 --> 00:00:42,007
+if it doesn't take the first time.
+
+21
+00:00:42,007 --> 00:00:44,008
+That's called being convergent.
+
+22
+00:00:44,008 --> 00:00:48,003
+As, over time, the tool works on converging the system
+
+23
+00:00:48,003 --> 00:00:49,008
+to the desired state.
+
+24
+00:00:49,008 --> 00:00:53,001
+The developer is less concerned with how it actually happens
+
+25
+00:00:53,001 --> 00:00:54,008
+and usually has only to be concerned
+
+26
+00:00:54,008 --> 00:00:57,006
+with the desired state at the end.
+
+27
+00:00:57,006 --> 00:01:00,008
+- Okay, so let's compare that with the imperative model.
+
+28
+00:01:00,008 --> 00:01:02,002
+In the imperative approach,
+
+29
+00:01:02,002 --> 00:01:05,004
+developers specify the order of actions to be taken
+
+30
+00:01:05,004 --> 00:01:07,006
+to achieve the desired result.
+
+31
+00:01:07,006 --> 00:01:09,006
+The imperative tools are more expressive
+
+32
+00:01:09,006 --> 00:01:11,009
+and allow the developer to perform complex,
+
+33
+00:01:11,009 --> 00:01:14,004
+conditional logic in the system.
+
+34
+00:01:14,004 --> 00:01:16,005
+Think of this as something like Ansible,
+
+35
+00:01:16,005 --> 00:01:19,007
+Salt, Rundeck or even Shell script.
+
+36
+00:01:19,007 --> 00:01:22,006
+They're a lot more explicit about the resources they manage
+
+37
+00:01:22,006 --> 00:01:25,001
+and they give the developer full control
+
+38
+00:01:25,001 --> 00:01:27,008
+over how the system changes are applied.
+
+39
+00:01:27,008 --> 00:01:29,007
+- [Instructor 1] The declarative model specifies
+
+40
+00:01:29,007 --> 00:01:31,004
+the desired in-state of the system;
+
+41
+00:01:31,004 --> 00:01:34,009
+it specifies the "what" we want to happen.
+
+42
+00:01:34,009 --> 00:01:36,007
+- [Ernest] Whereas the imperative model specifies
+
+43
+00:01:36,007 --> 00:01:39,006
+"how" the end-state is achieved.
+
+44
+00:01:39,006 --> 00:01:41,001
+- The declarative model is easier,
+
+45
+00:01:41,001 --> 00:01:43,000
+because it allows configuration management
+
+46
+00:01:43,000 --> 00:01:44,005
+to deal with all the details.
+
+47
+00:01:44,005 --> 00:01:47,002
+- You lie, I like having control.
+
+48
+00:01:47,002 --> 00:01:48,000
+- No, no, no.
+
+49
+00:01:48,000 --> 00:01:49,002
+Hear me out, Ernest.
+
+50
+00:01:49,002 --> 00:01:52,004
+Declarative tools are simpler and less error prone.
+
+51
+00:01:52,004 --> 00:01:55,000
+Things like Shell scripts don't really do a good job
+
+52
+00:01:55,000 --> 00:01:56,004
+of checking to see if they needed
+
+53
+00:01:56,004 --> 00:01:58,001
+to make a change in the first place,
+
+54
+00:01:58,001 --> 00:02:01,001
+or testing to see if they made the change successfully.
+
+55
+00:02:01,001 --> 00:02:02,008
+- Well, that's the theory.
+
+56
+00:02:02,008 --> 00:02:06,002
+Declarative tools arose in the early days of DevOps
+
+57
+00:02:06,002 --> 00:02:07,008
+to make configuration management
+
+58
+00:02:07,008 --> 00:02:09,009
+less bespoke and more standard.
+
+59
+00:02:09,009 --> 00:02:12,009
+And they work well in desktop or lab environments
+
+60
+00:02:12,009 --> 00:02:14,007
+where you don't really need control,
+
+61
+00:02:14,007 --> 00:02:15,008
+you just want all the boxes
+
+62
+00:02:15,008 --> 00:02:18,004
+to upgrade themselves at some point.
+
+63
+00:02:18,004 --> 00:02:20,004
+But how we use systems has changed
+
+64
+00:02:20,004 --> 00:02:22,001
+and it makes declarative tools less
+
+65
+00:02:22,001 --> 00:02:23,006
+suitable, now.
+
+66
+00:02:23,006 --> 00:02:25,005
+- What does that mean?
+
+67
+00:02:25,005 --> 00:02:27,005
+- I'd say most of the large scale systems
+
+68
+00:02:27,005 --> 00:02:29,001
+I've worked on in the last 10 years
+
+69
+00:02:29,001 --> 00:02:30,004
+have been running applications
+
+70
+00:02:30,004 --> 00:02:32,008
+that need more careful orchestration
+
+71
+00:02:32,008 --> 00:02:34,008
+of their upgrades and changes.
+
+72
+00:02:34,008 --> 00:02:36,006
+Those declarative tools tend to have
+
+73
+00:02:36,006 --> 00:02:38,006
+a convergent model of employment
+
+74
+00:02:38,006 --> 00:02:40,005
+that says, "Well I'll try to upgrade
+
+75
+00:02:40,005 --> 00:02:43,002
+these a hundred servers at no particular time,
+
+76
+00:02:43,002 --> 00:02:45,003
+and if they fail, I'll just keep trying
+
+77
+00:02:45,003 --> 00:02:48,007
+to get them into the declarative state, no hurry."
+
+78
+00:02:48,007 --> 00:02:50,009
+If those applications are coordinated
+
+79
+00:02:50,009 --> 00:02:54,002
+with a database change or serving trafficked customers
+
+80
+00:02:54,002 --> 00:02:57,001
+that shouldn't be getting random old and new answers,
+
+81
+00:02:57,001 --> 00:02:58,007
+that's a problem.
+
+82
+00:02:58,007 --> 00:03:00,008
+You need the the control of an imperative system,
+
+83
+00:03:00,008 --> 00:03:03,004
+because they're easier to orchestrate.
+
+84
+00:03:03,004 --> 00:03:05,004
+- But if you do imperative provisioning,
+
+85
+00:03:05,004 --> 00:03:07,007
+you're assuming those systems will always stay
+
+86
+00:03:07,007 --> 00:03:09,004
+in your desired in-state.
+
+87
+00:03:09,004 --> 00:03:12,003
+You know, systems are complex and they change over time.
+
+88
+00:03:12,003 --> 00:03:13,007
+The actual state of the system
+
+89
+00:03:13,007 --> 00:03:16,004
+will diverge from what the developer knows to be true,
+
+90
+00:03:16,004 --> 00:03:18,000
+whether through the resource provider
+
+91
+00:03:18,000 --> 00:03:19,005
+or even the OS package level.
+
+92
+00:03:19,005 --> 00:03:21,009
+You just can't know everything in your system,
+
+93
+00:03:21,009 --> 00:03:24,006
+resulting in the developer's mental model about the system
+
+94
+00:03:24,006 --> 00:03:27,009
+not matching the actual system state.
+
+95
+00:03:27,009 --> 00:03:29,003
+- You're right, it leaves the problem
+
+96
+00:03:29,003 --> 00:03:30,009
+of drift detection to you.
+
+97
+00:03:30,009 --> 00:03:33,000
+- Okay, so you're on my side now.
+
+98
+00:03:33,000 --> 00:03:35,005
+- Well, maybe. The thing is, with the rise
+
+99
+00:03:35,005 --> 00:03:37,004
+of VMs and containers,
+
+100
+00:03:37,004 --> 00:03:40,002
+individual systems are less complex, now.
+
+101
+00:03:40,002 --> 00:03:42,006
+Instead of let's put a bunch of applications
+
+102
+00:03:42,006 --> 00:03:44,006
+on one server, like we used to.
+
+103
+00:03:44,006 --> 00:03:45,005
+- Ah, yes.
+
+104
+00:03:45,005 --> 00:03:46,005
+The good old days.
+
+105
+00:03:46,005 --> 00:03:48,007
+I remember our app server cluster well
+
+106
+00:03:48,007 --> 00:03:51,000
+with 30 Java applications on it.
+
+107
+00:03:51,000 --> 00:03:53,007
+- Yeah. I thought the pages would never end,
+
+108
+00:03:53,007 --> 00:03:58,005
+but anyway, we have much less complex individual systems.
+
+109
+00:03:58,005 --> 00:04:00,009
+Often we'll maybe add a couple packages
+
+110
+00:04:00,009 --> 00:04:03,008
+and then one app service, and then go.
+
+111
+00:04:03,008 --> 00:04:05,006
+With containers and serverless,
+
+112
+00:04:05,006 --> 00:04:08,007
+often there's not even a need for any OS provisioning.
+
+113
+00:04:08,007 --> 00:04:11,007
+For these, a simpler imperative approach
+
+114
+00:04:11,007 --> 00:04:14,004
+is way more understandable and testable.
+
+115
+00:04:14,004 --> 00:04:16,006
+- But what about your overall network?
+
+116
+00:04:16,006 --> 00:04:18,006
+It's so easy to lose track of things
+
+117
+00:04:18,006 --> 00:04:22,000
+if you're just making a single imperative change.
+
+118
+00:04:22,000 --> 00:04:24,009
+- True. The good thing about cloud infrastructure
+
+119
+00:04:24,009 --> 00:04:28,007
+is that it has a single standard A-P-I to use to control it.
+
+120
+00:04:28,007 --> 00:04:31,002
+And then it's more of a solved problem
+
+121
+00:04:31,002 --> 00:04:33,006
+to instantiate a declarative model.
+
+122
+00:04:33,006 --> 00:04:35,007
+For anything that has controlled APIs
+
+123
+00:04:35,007 --> 00:04:38,008
+for deployment, orchestration and runtime,
+
+124
+00:04:38,008 --> 00:04:42,004
+then yeah, it makes sense to go with a declarative approach.
+
+125
+00:04:42,004 --> 00:04:44,002
+However, if you're needing more control
+
+126
+00:04:44,002 --> 00:04:48,000
+inside the box or system, for OS level packages,
+
+127
+00:04:48,000 --> 00:04:51,004
+I find it better to think about that as an imperative model.
+
+128
+00:04:51,004 --> 00:04:52,002
+- Right on.
+
+129
+00:04:52,002 --> 00:04:54,000
+That makes sense to me as a good delineator,
+
+130
+00:04:54,000 --> 00:04:56,007
+for those thinking about which direction to go.
+
+131
+00:04:56,007 --> 00:04:58,002
+That's what I see people doing, too.
+
+132
+00:04:58,002 --> 00:05:00,000
+A declarative tool like Terraform
+
+133
+00:05:00,000 --> 00:05:02,006
+is the current favorite for infrastructure provisioning
+
+134
+00:05:02,006 --> 00:05:05,009
+and then for systems, an imperative tool like Ansible,
+
+135
+00:05:05,009 --> 00:05:07,007
+or even just a couple lines of Shell,
+
+136
+00:05:07,007 --> 00:05:12,001
+if it's a container, it seems to be the lead option there.
+
+137
+00:05:12,001 --> 00:05:13,002
+- It still seems like there could be
+
+138
+00:05:13,002 --> 00:05:14,009
+a better solution, though.
+
+139
+00:05:14,009 --> 00:05:17,008
+Running the same installs on a thousand servers
+
+140
+00:05:17,008 --> 00:05:20,001
+is just asking for some of them to break
+
+141
+00:05:20,001 --> 00:05:22,003
+and it seems wasteful.
+
+142
+00:05:22,003 --> 00:05:24,006
+What if we could just build the entire system
+
+143
+00:05:24,006 --> 00:05:25,005
+and then roll it out?
+
+144
+00:05:25,005 --> 00:05:28,003
+Then the the systems themselves could be immutable
+
+145
+00:05:28,003 --> 00:05:29,009
+and not need to change over time.
+
+146
+00:05:29,009 --> 00:05:34,008
+- Ah, the old tinfoil versus golden image debate is back.
+
+147
+00:05:34,008 --> 00:05:36,005
+- Did you say tinfoil hat?
+
+148
+00:05:36,005 --> 00:05:38,000
+- No, I wasn't saying tin foil hat, I was,
+
+149
+00:05:38,000 --> 00:05:39,005
+- Join us in the next video
+
+150
+00:05:39,005 --> 00:05:42,000
+to find out if immutable deployment is a better approach.
+

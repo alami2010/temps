@@ -1,0 +1,564 @@
+1
+00:00:00,007 --> 00:00:03,008
+- Well, I know we just learned in the last video
+
+2
+00:00:03,008 --> 00:00:06,000
+that imperative provisioning is best.
+
+3
+00:00:06,000 --> 00:00:08,007
+- I think you mean declarative.
+
+4
+00:00:08,007 --> 00:00:10,009
+- But there's an even better approach.
+
+5
+00:00:10,009 --> 00:00:12,007
+Immutable provisioning.
+
+6
+00:00:12,007 --> 00:00:16,000
+Everything versus immutable, fight.
+
+7
+00:00:16,000 --> 00:00:18,007
+- What do you mean, immutable?
+
+8
+00:00:18,007 --> 00:00:20,007
+- Well, immutable deployments mean
+
+9
+00:00:20,007 --> 00:00:22,004
+that pieces of your infrastructure
+
+10
+00:00:22,004 --> 00:00:25,002
+aren't intended to be changed after deployment.
+
+11
+00:00:25,002 --> 00:00:29,004
+But instead are destroyed and recreated to affect changes.
+
+12
+00:00:29,004 --> 00:00:31,004
+- Well, that doesn't make any sense.
+
+13
+00:00:31,004 --> 00:00:34,002
+You have to change what's on your servers.
+
+14
+00:00:34,002 --> 00:00:36,003
+- Or do you?
+
+15
+00:00:36,003 --> 00:00:38,001
+- Yes.
+
+16
+00:00:38,001 --> 00:00:41,001
+- Well, but remember all our new infrastructure options.
+
+17
+00:00:41,001 --> 00:00:43,002
+You can throw away an old server
+
+18
+00:00:43,002 --> 00:00:45,003
+and create a new one in minutes.
+
+19
+00:00:45,003 --> 00:00:47,006
+At Netflix, for example, they popularized
+
+20
+00:00:47,006 --> 00:00:50,005
+an architecture where you bake new Amazon images
+
+21
+00:00:50,005 --> 00:00:53,004
+for every code change, and put whole squads
+
+22
+00:00:53,004 --> 00:00:55,008
+of them into service to conduct a rollout.
+
+23
+00:00:55,008 --> 00:00:58,007
+- Yeah, but isn't that kind of course grained,
+
+24
+00:00:58,007 --> 00:01:01,000
+replacing whole servers just to make
+
+25
+00:01:01,000 --> 00:01:03,007
+a code change, or a security patch?
+
+26
+00:01:03,007 --> 00:01:06,008
+- We've all had just a security patch brick systems.
+
+27
+00:01:06,008 --> 00:01:09,009
+This approach lets you build, test, and roll out
+
+28
+00:01:09,009 --> 00:01:12,004
+your infrastructure change in a reasoned way.
+
+29
+00:01:12,004 --> 00:01:14,005
+Truly identical to a code change.
+
+30
+00:01:14,005 --> 00:01:17,001
+It also lets you perform more sophisticated
+
+31
+00:01:17,001 --> 00:01:19,007
+rollout strategies, like blue green deployments
+
+32
+00:01:19,007 --> 00:01:21,009
+and canarying, with your infrastructure,
+
+33
+00:01:21,009 --> 00:01:23,009
+not just with your applications.
+
+34
+00:01:23,009 --> 00:01:26,008
+- I don't know, it seems like a lot of work
+
+35
+00:01:26,008 --> 00:01:29,002
+to do all that creation and destruction.
+
+36
+00:01:29,002 --> 00:01:32,007
+Isn't it kind of, you know, wasteful and risky?
+
+37
+00:01:32,007 --> 00:01:34,008
+- Most modern systems scale up and down
+
+38
+00:01:34,008 --> 00:01:37,002
+as part of normal operation anyway,
+
+39
+00:01:37,002 --> 00:01:39,000
+so it's largely the same mechanism
+
+40
+00:01:39,000 --> 00:01:40,009
+which adds to reliability.
+
+41
+00:01:40,009 --> 00:01:43,003
+And having a CM tool try to make
+
+42
+00:01:43,003 --> 00:01:45,001
+the same, complex software change
+
+43
+00:01:45,001 --> 00:01:48,003
+across a hundred servers is a lot more work.
+
+44
+00:01:48,003 --> 00:01:49,007
+And the chance that it'll go wrong
+
+45
+00:01:49,007 --> 00:01:52,001
+on one or more of them is, it's there.
+
+46
+00:01:52,001 --> 00:01:55,005
+If you do the install once, to immutable artifact
+
+47
+00:01:55,005 --> 00:01:58,008
+and deploy that, you're actually doing a lot less work.
+
+48
+00:01:58,008 --> 00:02:01,009
+- Okay, I seem to remember a classic
+
+49
+00:02:01,009 --> 00:02:04,006
+DevOps article by Luke Kanies,
+
+50
+00:02:04,006 --> 00:02:07,007
+called Golden Image or Foil Ball.
+
+51
+00:02:07,007 --> 00:02:10,004
+That showed how hard it was to manage images
+
+52
+00:02:10,004 --> 00:02:13,003
+and that you should use CM tools, though.
+
+53
+00:02:13,003 --> 00:02:15,004
+You don't want to cross Luke, do you?
+
+54
+00:02:15,004 --> 00:02:16,002
+- Not me.
+
+55
+00:02:16,002 --> 00:02:19,002
+But with respect, it was true at the time.
+
+56
+00:02:19,002 --> 00:02:22,001
+But that was 2009, and most imaging
+
+57
+00:02:22,001 --> 00:02:24,000
+was slow and not scalable.
+
+58
+00:02:24,000 --> 00:02:27,006
+I used Ghost to clone hard drives in the '90s too.
+
+59
+00:02:27,006 --> 00:02:29,001
+- Well, snap.
+
+60
+00:02:29,001 --> 00:02:32,002
+- But now tools like Packer let you stamp out
+
+61
+00:02:32,002 --> 00:02:34,007
+version VM images, and Docker lets you
+
+62
+00:02:34,007 --> 00:02:36,009
+stamp out version Docker images.
+
+63
+00:02:36,009 --> 00:02:39,003
+And the tools to manage them exist now.
+
+64
+00:02:39,003 --> 00:02:41,007
+Furthermore, like we've been talking about,
+
+65
+00:02:41,007 --> 00:02:44,004
+the move to microservices and modern scaling
+
+66
+00:02:44,004 --> 00:02:48,009
+tend to putting a limited load out on each given system,
+
+67
+00:02:48,009 --> 00:02:51,008
+so that they're very specific in their role.
+
+68
+00:02:51,008 --> 00:02:54,009
+If you can track the compiled artifacts of your code
+
+69
+00:02:54,009 --> 00:02:57,009
+you can track the compiled artifacts of your infrastructure.
+
+70
+00:02:57,009 --> 00:02:59,007
+- Okay, I see your point.
+
+71
+00:02:59,007 --> 00:03:03,003
+But, you can't just throw away your database, can you?
+
+72
+00:03:03,003 --> 00:03:05,008
+What about things that need to be persistent?
+
+73
+00:03:05,008 --> 00:03:06,009
+- True enough.
+
+74
+00:03:06,009 --> 00:03:10,000
+Although that just means you can't throw away your storage.
+
+75
+00:03:10,000 --> 00:03:11,009
+Plenty of people run redundant sets
+
+76
+00:03:11,009 --> 00:03:14,002
+of database servers that you can roll.
+
+77
+00:03:14,002 --> 00:03:16,003
+MongoDB is great for this.
+
+78
+00:03:16,003 --> 00:03:19,004
+Or database engines in a container,
+
+79
+00:03:19,004 --> 00:03:21,006
+that mount their storage on a separate drive.
+
+80
+00:03:21,006 --> 00:03:23,008
+- Okay, if your production environment
+
+81
+00:03:23,008 --> 00:03:26,004
+is really immutable, how do you log in
+
+82
+00:03:26,004 --> 00:03:29,005
+and make changes to fix production problems?
+
+83
+00:03:29,005 --> 00:03:31,007
+- You're right, it takes a different approach.
+
+84
+00:03:31,007 --> 00:03:33,007
+Plenty of observability, so that you can
+
+85
+00:03:33,007 --> 00:03:36,000
+figure out what's wrong, and then you fix
+
+86
+00:03:36,000 --> 00:03:38,005
+the code and deploy a new version.
+
+87
+00:03:38,005 --> 00:03:41,006
+So you tend to be tied to your deploy pipeline.
+
+88
+00:03:41,006 --> 00:03:45,002
+It needs to be really fast and reliable to make this work.
+
+89
+00:03:45,002 --> 00:03:46,009
+- But where does it stop though?
+
+90
+00:03:46,009 --> 00:03:49,006
+I mean, do you make your entire network
+
+91
+00:03:49,006 --> 00:03:51,007
+one big thing that you just throw away?
+
+92
+00:03:51,007 --> 00:03:55,009
+Or just the servers, or the containers on the servers?
+
+93
+00:03:55,009 --> 00:03:58,009
+Where does it all end, Ernest?
+
+94
+00:03:58,009 --> 00:04:00,001
+- That's a good question.
+
+95
+00:04:00,001 --> 00:04:02,000
+And it does depend on what you're doing.
+
+96
+00:04:02,000 --> 00:04:05,005
+If you try to deploy a very complex system,
+
+97
+00:04:05,005 --> 00:04:07,006
+you've gotten yourself back into the problem
+
+98
+00:04:07,006 --> 00:04:11,000
+that immutable building blocks has gotten you out of.
+
+99
+00:04:11,000 --> 00:04:13,007
+Netflix works at a giant scale, so they can just
+
+100
+00:04:13,007 --> 00:04:17,006
+swing in a whole new VPC full of mostly identical systems.
+
+101
+00:04:17,006 --> 00:04:20,005
+Most people don't immutably deploy things
+
+102
+00:04:20,005 --> 00:04:23,003
+like their base VPC network, but do use
+
+103
+00:04:23,003 --> 00:04:25,005
+baked system images and containers
+
+104
+00:04:25,005 --> 00:04:27,009
+and orchestrate from there.
+
+105
+00:04:27,009 --> 00:04:30,006
+Kubernetes is kind of the poster child for this.
+
+106
+00:04:30,006 --> 00:04:33,003
+You have a core node image and containers.
+
+107
+00:04:33,003 --> 00:04:35,001
+And then it handles deployment,
+
+108
+00:04:35,001 --> 00:04:38,006
+scale up and down, replacement, and so on.
+
+109
+00:04:38,006 --> 00:04:40,009
+- Okay, I see where you're coming from.
+
+110
+00:04:40,009 --> 00:04:43,009
+It's just such a big change from what we all
+
+111
+00:04:43,009 --> 00:04:45,009
+used to do in system administration.
+
+112
+00:04:45,009 --> 00:04:46,009
+- I feel you.
+
+113
+00:04:46,009 --> 00:04:50,004
+In the end, we're just moving up one level of abstraction.
+
+114
+00:04:50,004 --> 00:04:53,002
+In the old times, even single processes
+
+115
+00:04:53,002 --> 00:04:54,007
+weren't always immutable.
+
+116
+00:04:54,007 --> 00:04:57,009
+But we quickly learned that for 99% of use cases
+
+117
+00:04:57,009 --> 00:05:00,008
+you want processes that act just like each other.
+
+118
+00:05:00,008 --> 00:05:04,004
+And not to mess with them, expecting to spawn and kill them.
+
+119
+00:05:04,004 --> 00:05:06,004
+Now, changes to running processes
+
+120
+00:05:06,004 --> 00:05:09,005
+is generally just a tell of a security compromise.
+
+121
+00:05:09,005 --> 00:05:11,008
+- Right, you know I always used to compile
+
+122
+00:05:11,008 --> 00:05:14,001
+Apache myself on every server.
+
+123
+00:05:14,001 --> 00:05:15,008
+And when suddenly you could just install
+
+124
+00:05:15,008 --> 00:05:18,005
+a pre-compiled Apache from a package,
+
+125
+00:05:18,005 --> 00:05:20,008
+I wasn't sure what to think of it.
+
+126
+00:05:20,008 --> 00:05:22,005
+But it ended up saving me time
+
+127
+00:05:22,005 --> 00:05:25,002
+and let me worry about higher level abstractions.
+
+128
+00:05:25,002 --> 00:05:27,001
+- And to be fair, you still have
+
+129
+00:05:27,001 --> 00:05:29,006
+your same declarative or imperative choice.
+
+130
+00:05:29,006 --> 00:05:31,007
+It's just that action is taking place
+
+131
+00:05:31,007 --> 00:05:33,009
+in the build stage, and you're just running
+
+132
+00:05:33,009 --> 00:05:37,001
+the resulting immutable artifacts in production.
+
+133
+00:05:37,001 --> 00:05:38,007
+- Hornswaggled again, Ernest.
+
+134
+00:05:38,007 --> 00:05:41,001
+- And that's immutable deployment.
+
+135
+00:05:41,001 --> 00:05:43,002
+It's not the right thing for every case,
+
+136
+00:05:43,002 --> 00:05:46,002
+but it has compelling advantages in a lot.
+
+137
+00:05:46,002 --> 00:05:49,007
+I might dare say the majority of cases.
+
+138
+00:05:49,007 --> 00:05:50,008
+Now stay with us.
+
+139
+00:05:50,008 --> 00:05:53,005
+We're done talking smack and we're going to hit the code.
+
+140
+00:05:53,005 --> 00:05:55,001
+And show you how to use real tools
+
+141
+00:05:55,001 --> 00:05:58,000
+to implement all these concepts in our provisioning lab.
+

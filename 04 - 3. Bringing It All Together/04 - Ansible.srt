@@ -1,0 +1,512 @@
+1
+00:00:00,005 --> 00:00:02,003
+- [Instructor] We've provisioned some infrastructure,
+
+2
+00:00:02,003 --> 00:00:05,004
+but what about configuration management for the software?
+
+3
+00:00:05,004 --> 00:00:09,001
+We made servers, but Kubernetes isn't just automatically
+
+4
+00:00:09,001 --> 00:00:10,003
+running on them.
+
+5
+00:00:10,003 --> 00:00:13,003
+So now we're going to use the other part of kube spray,
+
+6
+00:00:13,003 --> 00:00:17,001
+the Ansible playbooks, that actually install Kubernetes.
+
+7
+00:00:17,001 --> 00:00:21,003
+Let's take a look at one of the simplest playbooks included,
+
+8
+00:00:21,003 --> 00:00:24,001
+the one that checks the Ansible version.
+
+9
+00:00:24,001 --> 00:00:27,008
+As you can see this playbook, it checks the Ansible version.
+
+10
+00:00:27,008 --> 00:00:29,000
+It does a couple other things
+
+11
+00:00:29,000 --> 00:00:32,007
+like checking the Python and Jinja versions to make sure
+
+12
+00:00:32,007 --> 00:00:35,007
+that, you know, it can run on this system.
+
+13
+00:00:35,007 --> 00:00:37,006
+So let's run it.
+
+14
+00:00:37,006 --> 00:00:41,007
+We run it with the Ansible Playbook command
+
+15
+00:00:41,007 --> 00:00:47,003
+and we just feed it the playbook.
+
+16
+00:00:47,003 --> 00:00:49,002
+So it takes it, it runs it,
+
+17
+00:00:49,002 --> 00:00:51,003
+and it performs all those commands.
+
+18
+00:00:51,003 --> 00:00:54,000
+And as you can see here, it's checked the Ansible
+
+19
+00:00:54,000 --> 00:00:56,006
+and Python and Jinja versions, and they all pass.
+
+20
+00:00:56,006 --> 00:00:57,008
+So, it's good.
+
+21
+00:00:57,008 --> 00:01:04,006
+Now let's look at the main playbook, cluster dot yml.
+
+22
+00:01:04,006 --> 00:01:06,009
+You can see at the top, the first thing that does
+
+23
+00:01:06,009 --> 00:01:11,004
+is include that Ansible version playbook that we just ran.
+
+24
+00:01:11,004 --> 00:01:14,008
+Then it goes on to set up the different kinds of hosts
+
+25
+00:01:14,008 --> 00:01:16,000
+in our system.
+
+26
+00:01:16,000 --> 00:01:16,009
+And as you can see,
+
+27
+00:01:16,009 --> 00:01:23,001
+the primary thing that it does is apply roles to them.
+
+28
+00:01:23,001 --> 00:01:29,005
+Each role, in turn, is defined by one or more playbooks.
+
+29
+00:01:29,005 --> 00:01:33,003
+Let's go take a look at the Bootstrap OS role
+
+30
+00:01:33,003 --> 00:01:40,002
+that it's putting on most of these servers.
+
+31
+00:01:40,002 --> 00:01:43,003
+So here, down in the tasks directory,
+
+32
+00:01:43,003 --> 00:01:47,001
+is where most of the code actually is.
+
+33
+00:01:47,001 --> 00:01:49,007
+Let's take a look at the Bootstrap Debian file
+
+34
+00:01:49,007 --> 00:01:51,003
+because we've been setting up
+
+35
+00:01:51,003 --> 00:01:54,005
+Debian servers for our Kubernetes.
+
+36
+00:01:54,005 --> 00:01:58,004
+All right, so in here it goes through all
+
+37
+00:01:58,004 --> 00:02:02,004
+of the little things that it does to get each server ready
+
+38
+00:02:02,004 --> 00:02:04,000
+and you know it's low level stuff,
+
+39
+00:02:04,000 --> 00:02:08,007
+installing Python, adding other packages to it,
+
+40
+00:02:08,007 --> 00:02:11,000
+doing a apt get update.
+
+41
+00:02:11,000 --> 00:02:12,002
+At the bottom level,
+
+42
+00:02:12,002 --> 00:02:16,004
+there are either commands that Ansible knows how to perform,
+
+43
+00:02:16,004 --> 00:02:20,006
+like package here is a Ansible keyword that says, okay,
+
+44
+00:02:20,006 --> 00:02:24,000
+I know how to install a package on this operating system.
+
+45
+00:02:24,000 --> 00:02:25,004
+Go ahead and do it.
+
+46
+00:02:25,004 --> 00:02:27,007
+And then there are ones called raw
+
+47
+00:02:27,007 --> 00:02:30,008
+which in the end says, execute this command line, right?
+
+48
+00:02:30,008 --> 00:02:32,008
+So for something that doesn't fit neatly
+
+49
+00:02:32,008 --> 00:02:34,009
+into one of the existing keywords,
+
+50
+00:02:34,009 --> 00:02:38,004
+you just say raw and say what you want it to do.
+
+51
+00:02:38,004 --> 00:02:39,003
+All right, so let's talk
+
+52
+00:02:39,003 --> 00:02:42,002
+about running Ansible on remote servers.
+
+53
+00:02:42,002 --> 00:02:43,001
+So first, let's look
+
+54
+00:02:43,001 --> 00:02:47,007
+at the inventory file that our Terraform made.
+
+55
+00:02:47,007 --> 00:02:51,009
+If you'll recall, when we ran the Terraform, each time
+
+56
+00:02:51,009 --> 00:02:56,004
+it would output this inventory file that has the host names
+
+57
+00:02:56,004 --> 00:02:58,006
+and IP addresses of all the components.
+
+58
+00:02:58,006 --> 00:03:00,001
+This is so that Ansible can go
+
+59
+00:03:00,001 --> 00:03:03,002
+and find them to do what it needs to do.
+
+60
+00:03:03,002 --> 00:03:04,007
+They're broken up into roles
+
+61
+00:03:04,007 --> 00:03:06,009
+so that it understands which, you know,
+
+62
+00:03:06,009 --> 00:03:09,000
+which servers have the control plane running
+
+63
+00:03:09,000 --> 00:03:11,009
+on them versus being workers.
+
+64
+00:03:11,009 --> 00:03:13,005
+It should come as no big surprise
+
+65
+00:03:13,005 --> 00:03:16,008
+to you by now that I'm a big old cheater.
+
+66
+00:03:16,008 --> 00:03:20,006
+So I already ran cluster dot yml to install Kubernetes
+
+67
+00:03:20,006 --> 00:03:22,002
+across all the servers.
+
+68
+00:03:22,002 --> 00:03:25,002
+It takes a gruesomely long time.
+
+69
+00:03:25,002 --> 00:03:31,001
+So let's run kubectl, get nodes, and it shows
+
+70
+00:03:31,001 --> 00:03:33,008
+that we've got three control plane nodes already set up
+
+71
+00:03:33,008 --> 00:03:37,005
+with Kubernetes and three worker nodes.
+
+72
+00:03:37,005 --> 00:03:40,003
+But you may have noticed that in the last lab
+
+73
+00:03:40,003 --> 00:03:42,007
+we used Terraform to add a fourth worker
+
+74
+00:03:42,007 --> 00:03:49,001
+and we see it listed in the inventory file.
+
+75
+00:03:49,001 --> 00:03:50,000
+Right?
+
+76
+00:03:50,000 --> 00:03:53,001
+We've got four kube nodes here
+
+77
+00:03:53,001 --> 00:03:55,001
+but we don't see it in Kubernetes.
+
+78
+00:03:55,001 --> 00:03:56,008
+Well, that's because we haven't actually
+
+79
+00:03:56,008 --> 00:04:00,002
+installed the Kubernetes software on it.
+
+80
+00:04:00,002 --> 00:04:03,007
+So let's use a playbook that they use specifically
+
+81
+00:04:03,007 --> 00:04:05,007
+for scaling up a cluster.
+
+82
+00:04:05,007 --> 00:04:09,000
+It's called scale dot yml.
+
+83
+00:04:09,000 --> 00:04:10,009
+So it's like cluster dot yml,
+
+84
+00:04:10,009 --> 00:04:14,005
+but it doesn't have to do all the core cluster work.
+
+85
+00:04:14,005 --> 00:04:17,006
+So goes through, installs some things.
+
+86
+00:04:17,006 --> 00:04:21,006
+Notice how it's having to do a couple different iterations
+
+87
+00:04:21,006 --> 00:04:24,006
+on the servers to get it working.
+
+88
+00:04:24,006 --> 00:04:27,002
+So it has to go install some prerequisites,
+
+89
+00:04:27,002 --> 00:04:29,001
+then go install another batch of things,
+
+90
+00:04:29,001 --> 00:04:30,009
+and install a third batch of things.
+
+91
+00:04:30,009 --> 00:04:32,001
+And then at the end,
+
+92
+00:04:32,001 --> 00:04:36,008
+we should have working Kubernetes on that remaining system.
+
+93
+00:04:36,008 --> 00:04:39,001
+So let's check out this Ansible command line
+
+94
+00:04:39,001 --> 00:04:40,009
+that we're going to use.
+
+95
+00:04:40,009 --> 00:04:45,006
+So first we're saying use the inventory hosts file to figure
+
+96
+00:04:45,006 --> 00:04:49,008
+out where all the servers are, use the scale dot yml
+
+97
+00:04:49,008 --> 00:04:53,003
+playbook and then we have a number of parameters
+
+98
+00:04:53,003 --> 00:04:58,002
+around how to connect to the other system.
+
+99
+00:04:58,002 --> 00:04:59,007
+So, let's run this command
+
+100
+00:04:59,007 --> 00:05:04,005
+and have Ansible automatically go determine that one
+
+101
+00:05:04,005 --> 00:05:07,005
+of the listed server nodes does not have the software on it
+
+102
+00:05:07,005 --> 00:05:11,008
+and then install all the Kubernetes goodies.
+
+103
+00:05:11,008 --> 00:05:16,002
+So this is going to take about 15 minutes end to end.
+
+104
+00:05:16,002 --> 00:05:19,004
+So I'm going to press the turbo button on my computer
+
+105
+00:05:19,004 --> 00:05:21,004
+to skip to the end.
+
+106
+00:05:21,004 --> 00:05:23,002
+Alright, finally, we're back
+
+107
+00:05:23,002 --> 00:05:27,003
+after 13 minutes and 35 seconds of installing.
+
+108
+00:05:27,003 --> 00:05:29,001
+Now that seems like a long time,
+
+109
+00:05:29,001 --> 00:05:33,004
+but we installed literally hundreds of software packages,
+
+110
+00:05:33,004 --> 00:05:36,007
+docker containers, and configuration items.
+
+111
+00:05:36,007 --> 00:05:42,008
+So let's take a look at Kubernetes.
+
+112
+00:05:42,008 --> 00:05:50,001
+And there is our fourth worker node ready to go.
+
+113
+00:05:50,001 --> 00:05:53,000
+And all of the default control plane
+
+114
+00:05:53,000 --> 00:05:57,001
+and cubelets and all of that are set up and running
+
+115
+00:05:57,001 --> 00:06:00,001
+and this Kubernetes cluster is ready to use.
+
+116
+00:06:00,001 --> 00:06:01,003
+So, that's Ansible.
+
+117
+00:06:01,003 --> 00:06:04,005
+You construct nested playbooks to build up all the software
+
+118
+00:06:04,005 --> 00:06:06,006
+you need, and then you can execute them
+
+119
+00:06:06,006 --> 00:06:09,006
+either locally or on remote machines.
+
+120
+00:06:09,006 --> 00:06:11,009
+You can even orchestrate complex workflows,
+
+121
+00:06:11,009 --> 00:06:15,003
+like cube spray includes an upgrade cluster playbook
+
+122
+00:06:15,003 --> 00:06:18,004
+that can perform graceful software upgrades on your cluster
+
+123
+00:06:18,004 --> 00:06:21,003
+by coordinating and draining individual nodes
+
+124
+00:06:21,003 --> 00:06:24,000
+and then doing an installation in a rolling manner,
+
+125
+00:06:24,000 --> 00:06:26,007
+to do it without any application disruption.
+
+126
+00:06:26,007 --> 00:06:30,002
+By automating and testing your operations in this manner,
+
+127
+00:06:30,002 --> 00:06:33,004
+you can perform identical operations across large numbers
+
+128
+00:06:33,004 --> 00:06:36,000
+of servers with a high degree of safety.
+

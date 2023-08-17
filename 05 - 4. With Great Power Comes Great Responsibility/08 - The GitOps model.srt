@@ -1,0 +1,380 @@
+1
+00:00:00,006 --> 00:00:01,009
+- Okay. Sweet demo.
+
+2
+00:00:01,009 --> 00:00:03,005
+Are we done?
+
+3
+00:00:03,005 --> 00:00:06,000
+- No, it's time for a
+
+4
+00:00:06,000 --> 00:00:06,008
+- [Both] Bonus video!
+
+5
+00:00:06,008 --> 00:00:09,006
+(horn blares)
+
+6
+00:00:09,006 --> 00:00:11,002
+- Well, what else have we got?
+
+7
+00:00:11,002 --> 00:00:15,001
+What's newfangled and hot in the infrastructures code space?
+
+8
+00:00:15,001 --> 00:00:16,003
+- GitOps.
+
+9
+00:00:16,003 --> 00:00:17,003
+- Oh yeah.
+
+10
+00:00:17,003 --> 00:00:19,003
+The kids nowadays love their GitOps
+
+11
+00:00:19,003 --> 00:00:22,005
+with their iPads and their short pants.
+
+12
+00:00:22,005 --> 00:00:24,008
+GitOps is a way to do continuous delivery,
+
+13
+00:00:24,008 --> 00:00:28,004
+which aims to make the deployment process more reliable,
+
+14
+00:00:28,004 --> 00:00:31,006
+faster, and developer-friendly by using Git
+
+15
+00:00:31,006 --> 00:00:33,000
+as a single source of truth
+
+16
+00:00:33,000 --> 00:00:36,002
+for declarative infrastructure and applications.
+
+17
+00:00:36,002 --> 00:00:38,004
+- Absolutely, GitOps has been growing
+
+18
+00:00:38,004 --> 00:00:41,001
+in popularity as declarative orchestration frameworks
+
+19
+00:00:41,001 --> 00:00:44,005
+like Kubernetes have risen also in prominence.
+
+20
+00:00:44,005 --> 00:00:47,006
+- OpenGitOps is a set of open source standards,
+
+21
+00:00:47,006 --> 00:00:51,002
+best practices, and community-focused education
+
+22
+00:00:51,002 --> 00:00:53,008
+to help organizations adopt a structured approach
+
+23
+00:00:53,008 --> 00:00:55,003
+to implementing GitOps.
+
+24
+00:00:55,003 --> 00:00:57,001
+- Yeah, so let's review the definition
+
+25
+00:00:57,001 --> 00:01:00,001
+of GitOps as defined by OpenGitOps.
+
+26
+00:01:00,001 --> 00:01:02,006
+GitOps needs to exhibit these four characteristics.
+
+27
+00:01:02,006 --> 00:01:03,006
+Ernest, are you ready?
+
+28
+00:01:03,006 --> 00:01:05,000
+- Born ready?
+
+29
+00:01:05,000 --> 00:01:07,002
+First, it's declarative.
+
+30
+00:01:07,002 --> 00:01:10,001
+A system managed by GitOps must have its desired state
+
+31
+00:01:10,001 --> 00:01:12,000
+expressed declaratively.
+
+32
+00:01:12,000 --> 00:01:14,003
+- [James] Secondly, it's versioned and immutable.
+
+33
+00:01:14,003 --> 00:01:18,000
+Desired state is stored in a way that enforces immutability,
+
+34
+00:01:18,000 --> 00:01:21,003
+versioning, and retains a complete version history.
+
+35
+00:01:21,003 --> 00:01:23,005
+- [Ernest] Third, it's pulled automatically.
+
+36
+00:01:23,005 --> 00:01:26,000
+Software agents automatically pull the desired
+
+37
+00:01:26,000 --> 00:01:29,001
+state declarations from the source repo.
+
+38
+00:01:29,001 --> 00:01:31,007
+- [James] And lastly, continuously reconciled.
+
+39
+00:01:31,007 --> 00:01:35,000
+Software agents continuously observe actual system state
+
+40
+00:01:35,000 --> 00:01:38,000
+and attempt to apply the desired state.
+
+41
+00:01:38,000 --> 00:01:39,009
+- So what does this all mean?
+
+42
+00:01:39,009 --> 00:01:43,006
+Basically, you're skipping over a separate artifact layer
+
+43
+00:01:43,006 --> 00:01:46,005
+and you're just pulling a specific version of everything
+
+44
+00:01:46,005 --> 00:01:49,005
+out of Git revision control when you're deploying.
+
+45
+00:01:49,005 --> 00:01:51,008
+It does illustrate some of what we've already covered
+
+46
+00:01:51,008 --> 00:01:54,001
+in the course, and it can work really well
+
+47
+00:01:54,001 --> 00:01:55,009
+for driving declarative frameworks,
+
+48
+00:01:55,009 --> 00:01:58,002
+like Kubernetes, that are just waiting
+
+49
+00:01:58,002 --> 00:02:00,004
+for a new YAML configuration file to tell them
+
+50
+00:02:00,004 --> 00:02:02,004
+what all to load up.
+
+51
+00:02:02,004 --> 00:02:04,006
+- Right, and you know, GitOps is a great option
+
+52
+00:02:04,006 --> 00:02:06,006
+for treating infrastructure as code,
+
+53
+00:02:06,006 --> 00:02:09,000
+but we don't think that GitOps is the only way
+
+54
+00:02:09,000 --> 00:02:10,006
+to achieve infrastructure as code.
+
+55
+00:02:10,006 --> 00:02:12,005
+- No, that's right.
+
+56
+00:02:12,005 --> 00:02:14,007
+Because as great and well intentioned
+
+57
+00:02:14,007 --> 00:02:17,004
+as GitOps is, there are some drawbacks.
+
+58
+00:02:17,004 --> 00:02:18,009
+- [James] Yeah, right, for for one thing,
+
+59
+00:02:18,009 --> 00:02:21,006
+GitOps can be complex to set up and maintain,
+
+60
+00:02:21,006 --> 00:02:24,003
+especially if you have a large preexisting system
+
+61
+00:02:24,003 --> 00:02:27,001
+you want to transition to a GitOps flow.
+
+62
+00:02:27,001 --> 00:02:29,005
+- GitOps relies on storing the desired state
+
+63
+00:02:29,005 --> 00:02:32,004
+of the system in Git, which depends on the system
+
+64
+00:02:32,004 --> 00:02:35,009
+being able to interpret that fully and correctly.
+
+65
+00:02:35,009 --> 00:02:38,003
+You could see how there could be a desired state
+
+66
+00:02:38,003 --> 00:02:40,009
+that the system can't achieve.
+
+67
+00:02:40,009 --> 00:02:44,000
+For example, a new feature in a cloud service
+
+68
+00:02:44,000 --> 00:02:46,005
+hasn't been added to Terraform yet,
+
+69
+00:02:46,005 --> 00:02:47,005
+and it doesn't do any
+
+70
+00:02:47,005 --> 00:02:50,003
+of the dependency management things that Docker,
+
+71
+00:02:50,003 --> 00:02:52,005
+Nix or Wasm can give you.
+
+72
+00:02:52,005 --> 00:02:54,005
+- Yeah, and lastly, let's not forget
+
+73
+00:02:54,005 --> 00:02:56,007
+about visibility because, you know,
+
+74
+00:02:56,007 --> 00:02:59,005
+GitOps takes desired state and then applies changes.
+
+75
+00:02:59,005 --> 00:03:01,004
+You need a way to have real-time visibility
+
+76
+00:03:01,004 --> 00:03:02,008
+into the current state of the system
+
+77
+00:03:02,008 --> 00:03:05,006
+so you can troubleshoot problems.
+
+78
+00:03:05,006 --> 00:03:09,001
+- GitOps can be a powerful tool for managing the deployment
+
+79
+00:03:09,001 --> 00:03:11,004
+of applications to production environments,
+
+80
+00:03:11,004 --> 00:03:14,001
+but it isn't the only way to treat your infrastructure
+
+81
+00:03:14,001 --> 00:03:15,004
+as code.
+
+82
+00:03:15,004 --> 00:03:18,006
+I'd say you probably want to build most of your pieces
+
+83
+00:03:18,006 --> 00:03:21,006
+into artifacts and then only use GitOps to move out
+
+84
+00:03:21,006 --> 00:03:22,009
+the declarative recipes
+
+85
+00:03:22,009 --> 00:03:25,004
+of what you want running in production.
+
+86
+00:03:25,004 --> 00:03:27,000
+- Yeah, that makes sense to me.
+
+87
+00:03:27,000 --> 00:03:30,006
+And GitOps is also not the only way to fit version control
+
+88
+00:03:30,006 --> 00:03:33,002
+into your infrastructure as code implementation.
+
+89
+00:03:33,002 --> 00:03:35,004
+Hm, you can map artifacts to Git revisions
+
+90
+00:03:35,004 --> 00:03:38,000
+just using something like tagging.
+
+91
+00:03:38,000 --> 00:03:40,001
+- GitOps, it's all the rage
+
+92
+00:03:40,001 --> 00:03:42,000
+and it's good in some situations.
+
+93
+00:03:42,000 --> 00:03:44,003
+So just make sure that your infrastructure code
+
+94
+00:03:44,003 --> 00:03:46,001
+gets treated with the same care
+
+95
+00:03:46,001 --> 00:03:48,000
+as all the other code in your environment.
+
