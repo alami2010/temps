@@ -1,0 +1,308 @@
+1
+00:00:00,005 --> 00:00:02,003
+- Okay, so we're done now.
+
+2
+00:00:02,003 --> 00:00:04,000
+Our infrastructure is code,
+
+3
+00:00:04,000 --> 00:00:06,005
+and so thank you for joining us in this course.
+
+4
+00:00:06,005 --> 00:00:09,003
+- Well, hold on, so it depends what you mean.
+
+5
+00:00:09,003 --> 00:00:11,008
+There's your applications and your infrastructure,
+
+6
+00:00:11,008 --> 00:00:15,000
+but people may be forgetting about some other pieces.
+
+7
+00:00:15,000 --> 00:00:16,004
+What about your monitoring,
+
+8
+00:00:16,004 --> 00:00:18,008
+your runbooks, your documentation,
+
+9
+00:00:18,008 --> 00:00:21,009
+your API definitions, your SaaS integrations?
+
+10
+00:00:21,009 --> 00:00:23,006
+- Well, you know, I thought I'd just, you know,
+
+11
+00:00:23,006 --> 00:00:26,003
+click around and set all that stuff up manually.
+
+12
+00:00:26,003 --> 00:00:28,008
+- Have you learned nothing?
+
+13
+00:00:28,008 --> 00:00:30,004
+- Well, you know, seriously,
+
+14
+00:00:30,004 --> 00:00:33,003
+now that you have big parts of your system as code,
+
+15
+00:00:33,003 --> 00:00:35,007
+look to see what else you can codify.
+
+16
+00:00:35,007 --> 00:00:37,006
+- All these things are part of your system,
+
+17
+00:00:37,006 --> 00:00:38,008
+and they're all in scope
+
+18
+00:00:38,008 --> 00:00:41,009
+in terms of reliability, performance, and security.
+
+19
+00:00:41,009 --> 00:00:44,007
+- The application boundary isn't just the code anymore.
+
+20
+00:00:44,007 --> 00:00:47,002
+All the benefits you get out of infrastructure as code,
+
+21
+00:00:47,002 --> 00:00:49,007
+the testability and repeatability,
+
+22
+00:00:49,007 --> 00:00:52,008
+you want all that in all the other pieces of your system.
+
+23
+00:00:52,008 --> 00:00:54,007
+- The great thing is infrastructure as code
+
+24
+00:00:54,007 --> 00:00:57,005
+has been made possible by the rise of APIs,
+
+25
+00:00:57,005 --> 00:01:00,007
+so you can program to them to create your infrastructure.
+
+26
+00:01:00,007 --> 00:01:02,008
+Well, the majority of your SaaS providers
+
+27
+00:01:02,008 --> 00:01:05,005
+and tools also have APIs nowadays.
+
+28
+00:01:05,005 --> 00:01:06,004
+- [James] Yeah, for example,
+
+29
+00:01:06,004 --> 00:01:09,007
+instead of setting up monitoring dashboards by hand,
+
+30
+00:01:09,007 --> 00:01:11,001
+you can define them in code
+
+31
+00:01:11,001 --> 00:01:14,008
+and then load them into tools, like Grafana or DataDog.
+
+32
+00:01:14,008 --> 00:01:16,008
+- [Ernest] Same with your support runbooks.
+
+33
+00:01:16,008 --> 00:01:20,001
+Version them and then deploy them from an artifact.
+
+34
+00:01:20,001 --> 00:01:21,007
+- There's plenty of tooling nowadays
+
+35
+00:01:21,007 --> 00:01:24,002
+to help you generate documentation from your code
+
+36
+00:01:24,002 --> 00:01:25,002
+as well as information
+
+37
+00:01:25,002 --> 00:01:27,007
+on what can be monitored or manipulated.
+
+38
+00:01:27,007 --> 00:01:31,005
+Yeah, these are all, at their heart, version code as well.
+
+39
+00:01:31,005 --> 00:01:33,009
+- Then apply all the same principles we've talked
+
+40
+00:01:33,009 --> 00:01:35,002
+about here to them.
+
+41
+00:01:35,002 --> 00:01:37,006
+Deploy your monitoring setup via API
+
+42
+00:01:37,006 --> 00:01:39,003
+in your pre-production environments
+
+43
+00:01:39,003 --> 00:01:41,004
+as well as your production environments.
+
+44
+00:01:41,004 --> 00:01:43,008
+This makes sure your monitoring runbooks
+
+45
+00:01:43,008 --> 00:01:45,004
+and so on are always linked
+
+46
+00:01:45,004 --> 00:01:47,000
+to the right version of the apps
+
+47
+00:01:47,000 --> 00:01:49,002
+and infrastructure they were designed for,
+
+48
+00:01:49,002 --> 00:01:51,003
+and it lets you test them as well.
+
+49
+00:01:51,003 --> 00:01:52,005
+- Yeah, I wish I could say
+
+50
+00:01:52,005 --> 00:01:55,002
+I've never seen monitoring cause a production outage,
+
+51
+00:01:55,002 --> 00:01:56,007
+but I have.
+
+52
+00:01:56,007 --> 00:01:57,005
+- That's right.
+
+53
+00:01:57,005 --> 00:02:01,005
+The pattern of define, build, test, deploy is
+
+54
+00:02:01,005 --> 00:02:04,008
+a best practice for anything you can apply it to.
+
+55
+00:02:04,008 --> 00:02:07,005
+Challenge yourself when you're doing manual work.
+
+56
+00:02:07,005 --> 00:02:10,005
+Is there a way to do this as code instead?
+
+57
+00:02:10,005 --> 00:02:11,004
+- Many of the tools
+
+58
+00:02:11,004 --> 00:02:13,000
+in this space have started building ways
+
+59
+00:02:13,000 --> 00:02:15,006
+to express these extra components as code.
+
+60
+00:02:15,006 --> 00:02:17,003
+Take Terraform, for example,
+
+61
+00:02:17,003 --> 00:02:18,009
+we have a big library of providers
+
+62
+00:02:18,009 --> 00:02:21,001
+that let you manage, you know, Salesforce users,
+
+63
+00:02:21,001 --> 00:02:24,000
+DataDog dashboards, Splunk logging,
+
+64
+00:02:24,000 --> 00:02:28,005
+even passwords in 1Password, CDNs, DNS, and much more.
+
+65
+00:02:28,005 --> 00:02:30,006
+- I had a team that wrote Bash shell scripts
+
+66
+00:02:30,006 --> 00:02:33,008
+using the Rerun framework and built them into artifacts
+
+67
+00:02:33,008 --> 00:02:37,000
+for the Rundeck Runbook automation system to use.
+
+68
+00:02:37,000 --> 00:02:38,009
+We then used those scripts in Rundeck
+
+69
+00:02:38,009 --> 00:02:41,008
+to orchestrate all our production operations,
+
+70
+00:02:41,008 --> 00:02:43,004
+and changes to them were coded,
+
+71
+00:02:43,004 --> 00:02:46,003
+versioned, tested, deployed in test,
+
+72
+00:02:46,003 --> 00:02:48,000
+and then used in production
+
+73
+00:02:48,000 --> 00:02:50,006
+in a controlled and auditable manner.
+
+74
+00:02:50,006 --> 00:02:52,002
+- Ah, you know, it's a big difference
+
+75
+00:02:52,002 --> 00:02:54,005
+from back in the day when it was controversial
+
+76
+00:02:54,005 --> 00:02:56,009
+for CIS Admins to even use source control.
+
+77
+00:02:56,009 --> 00:02:59,000
+- We've come a long way, baby.
+

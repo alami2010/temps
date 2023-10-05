@@ -1,0 +1,428 @@
+1
+00:00:00,003 --> 00:00:03,003
+- Hey, Ernest, your newest code change
+
+2
+00:00:03,003 --> 00:00:05,006
+ended up crashing Docker in production.
+
+3
+00:00:05,006 --> 00:00:07,005
+- Well, it worked on my machine.
+
+4
+00:00:07,005 --> 00:00:12,000
+- Ah, you say that like that's a legitimate excuse.
+
+5
+00:00:12,000 --> 00:00:13,001
+It's all right.
+
+6
+00:00:13,001 --> 00:00:15,008
+You know, believe it or not, deployment is a necessary step
+
+7
+00:00:15,008 --> 00:00:18,005
+in your work, bringing actual value to users.
+
+8
+00:00:18,005 --> 00:00:21,003
+- It's the D in CI/CD.
+
+9
+00:00:21,003 --> 00:00:24,004
+- And in an infrastructures code world, it's code two
+
+10
+00:00:24,004 --> 00:00:26,001
+and it needs testing.
+
+11
+00:00:26,001 --> 00:00:29,002
+- What you really want is reproducible infrastructure
+
+12
+00:00:29,002 --> 00:00:31,001
+that works across all your environments
+
+13
+00:00:31,001 --> 00:00:35,004
+with repeatable results from dev to test to production.
+
+14
+00:00:35,004 --> 00:00:37,007
+This assures you that behavior will be the same
+
+15
+00:00:37,007 --> 00:00:40,005
+as you expect during your development.
+
+16
+00:00:40,005 --> 00:00:41,005
+- Yeah, that's right.
+
+17
+00:00:41,005 --> 00:00:43,005
+If you can have repeatable deployments
+
+18
+00:00:43,005 --> 00:00:46,002
+then you can do rollbacks, you can do roll forwards
+
+19
+00:00:46,002 --> 00:00:49,001
+with your infrastructure and not just your application code.
+
+20
+00:00:49,001 --> 00:00:51,008
+Because as much as we like to think they're independent,
+
+21
+00:00:51,008 --> 00:00:52,008
+they're not.
+
+22
+00:00:52,008 --> 00:00:54,008
+- And then you can reproduce environments
+
+23
+00:00:54,008 --> 00:00:57,002
+for troubleshooting and experimentation.
+
+24
+00:00:57,002 --> 00:00:59,001
+- Okay, but how do you do it?
+
+25
+00:00:59,001 --> 00:01:00,009
+Environmental differences have always been
+
+26
+00:01:00,009 --> 00:01:02,005
+a sad fact of life for decades.
+
+27
+00:01:02,005 --> 00:01:05,003
+Everyone knows that they're supposed to have identical tests
+
+28
+00:01:05,003 --> 00:01:06,007
+in production environments
+
+29
+00:01:06,007 --> 00:01:10,002
+but usually they're just somewhat similar at best
+
+30
+00:01:10,002 --> 00:01:12,006
+which leaves room for new bugs to show up.
+
+31
+00:01:12,006 --> 00:01:17,001
+- Three steps, step one, versioned artifacts for your code
+
+32
+00:01:17,001 --> 00:01:18,006
+and your infrastructure code.
+
+33
+00:01:18,006 --> 00:01:20,008
+- And step two, use that code to make
+
+34
+00:01:20,008 --> 00:01:22,000
+a production-like environment
+
+35
+00:01:22,000 --> 00:01:24,000
+in each phase of the dev cycle.
+
+36
+00:01:24,000 --> 00:01:27,001
+- And step three, have a mechanism to deploy it
+
+37
+00:01:27,001 --> 00:01:30,005
+in an identical manner in each of those environments.
+
+38
+00:01:30,005 --> 00:01:32,007
+- Okay, let's talk about artifacts.
+
+39
+00:01:32,007 --> 00:01:35,005
+This just means you package up and version your code
+
+40
+00:01:35,005 --> 00:01:38,001
+like every library that's out there.
+
+41
+00:01:38,001 --> 00:01:39,007
+- It can be an actual bundle
+
+42
+00:01:39,007 --> 00:01:44,000
+like an RPM or Debian package, or even just a GIT revision.
+
+43
+00:01:44,000 --> 00:01:46,004
+But the key thing is it can't ever change.
+
+44
+00:01:46,004 --> 00:01:48,003
+It needs to be constant once generated
+
+45
+00:01:48,003 --> 00:01:50,006
+and then used in each environment.
+
+46
+00:01:50,006 --> 00:01:52,006
+James talked to you about artifact generation
+
+47
+00:01:52,006 --> 00:01:54,004
+just a couple videos ago.
+
+48
+00:01:54,004 --> 00:01:56,002
+- Ah, you remembered.
+
+49
+00:01:56,002 --> 00:01:57,003
+- Oh, I wouldn't forget it, bro.
+
+50
+00:01:57,003 --> 00:01:58,004
+- Ah, thanks.
+
+51
+00:01:58,004 --> 00:02:01,003
+Well, next identical environments.
+
+52
+00:02:01,003 --> 00:02:02,007
+If you're generating your environments
+
+53
+00:02:02,007 --> 00:02:05,002
+from this disc code, most sources of difference
+
+54
+00:02:05,002 --> 00:02:07,008
+are from people making compromises.
+
+55
+00:02:07,008 --> 00:02:10,008
+- While you often do have to compromise on scale
+
+56
+00:02:10,008 --> 00:02:13,003
+a lot of the schemes I see to try to save money
+
+57
+00:02:13,003 --> 00:02:15,001
+on dev and test environments
+
+58
+00:02:15,001 --> 00:02:18,006
+end up being penny wise and pound foolish.
+
+59
+00:02:18,006 --> 00:02:21,001
+Yes, it can be more expensive to spin up servers
+
+60
+00:02:21,001 --> 00:02:24,003
+in the same cloud providers, your production environment,
+
+61
+00:02:24,003 --> 00:02:26,003
+you might need to buy that Oracle license
+
+62
+00:02:26,003 --> 00:02:28,008
+or pay for that Datadog monitoring,
+
+63
+00:02:28,008 --> 00:02:30,004
+but the fact that you're paying for that stuff
+
+64
+00:02:30,004 --> 00:02:32,005
+in the first place means the business thinks
+
+65
+00:02:32,005 --> 00:02:34,004
+your app is worth it.
+
+66
+00:02:34,004 --> 00:02:38,000
+So behaving in a way that's guaranteed to make it slower,
+
+67
+00:02:38,000 --> 00:02:40,008
+riskier and buggier to change that app,
+
+68
+00:02:40,008 --> 00:02:42,006
+usually not a great idea.
+
+69
+00:02:42,006 --> 00:02:45,008
+- Yeah, of course, being perfectly identical can be hard.
+
+70
+00:02:45,008 --> 00:02:48,001
+You know, scale and traffic differs at least
+
+71
+00:02:48,001 --> 00:02:49,006
+but your code shouldn't.
+
+72
+00:02:49,006 --> 00:02:52,003
+Externalize things like URLs to configuration
+
+73
+00:02:52,003 --> 00:02:54,008
+so you can configure your different environments
+
+74
+00:02:54,008 --> 00:02:58,001
+in a way where they should at least behave the same.
+
+75
+00:02:58,001 --> 00:03:00,007
+Even the developer's desktop can get close.
+
+76
+00:03:00,007 --> 00:03:02,009
+There's a lot of tools like Vagrant, Docker,
+
+77
+00:03:02,009 --> 00:03:05,008
+Compose and Minikube that improve alignment
+
+78
+00:03:05,008 --> 00:03:08,008
+even before you hit an external environment.
+
+79
+00:03:08,008 --> 00:03:10,007
+- And finally, the deployment.
+
+80
+00:03:10,007 --> 00:03:14,001
+Deployment is code just like all the rest of this.
+
+81
+00:03:14,001 --> 00:03:16,007
+So however you deploy your app in production
+
+82
+00:03:16,007 --> 00:03:19,006
+is how it should be deployed in pre-production.
+
+83
+00:03:19,006 --> 00:03:23,000
+This will prove to you both that your deployment code works
+
+84
+00:03:23,000 --> 00:03:25,006
+and that the application and infrastructure components
+
+85
+00:03:25,006 --> 00:03:28,004
+behave correctly when deployed.
+
+86
+00:03:28,004 --> 00:03:30,009
+If you have stable versioned artifacts,
+
+87
+00:03:30,009 --> 00:03:33,004
+generate your own identical environments
+
+88
+00:03:33,004 --> 00:03:36,006
+and deploy with the same code in each place,
+
+89
+00:03:36,006 --> 00:03:39,008
+you've gotten to a pretty darn good situation.
+
+90
+00:03:39,008 --> 00:03:41,007
+- Yeah, well, you know, back when Ernest and I
+
+91
+00:03:41,007 --> 00:03:43,006
+were working at National Instruments,
+
+92
+00:03:43,006 --> 00:03:46,002
+we did a lot of manual deployments of Java apps
+
+93
+00:03:46,002 --> 00:03:48,001
+across a cluster of app servers.
+
+94
+00:03:48,001 --> 00:03:50,007
+It was slow and it relied on manual instructions
+
+95
+00:03:50,007 --> 00:03:51,009
+from developers.
+
+96
+00:03:51,009 --> 00:03:54,004
+A lot of the time the instructions weren't right
+
+97
+00:03:54,004 --> 00:03:58,001
+and even if they were then we'd sometimes make a mistake
+
+98
+00:03:58,001 --> 00:03:59,007
+on one of the servers.
+
+99
+00:03:59,007 --> 00:04:02,002
+We wrote a simple deployment script that they had to use
+
+100
+00:04:02,002 --> 00:04:03,006
+in the dev and test environments
+
+101
+00:04:03,006 --> 00:04:05,003
+before we used it in production.
+
+102
+00:04:05,003 --> 00:04:08,002
+And suddenly speed of deployment shot up
+
+103
+00:04:08,002 --> 00:04:11,001
+and post-deployment bugs shot down.
+
+104
+00:04:11,001 --> 00:04:14,005
+- And that let us get to step four, profit.
+
+105
+00:04:14,005 --> 00:04:15,006
+- Profit?
+
+106
+00:04:15,006 --> 00:04:18,003
+- Well, or at least we had to do less off hours work.
+
+107
+00:04:18,003 --> 00:04:20,000
+- Okay, I'll call that profit.
+

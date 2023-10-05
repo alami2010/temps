@@ -1,0 +1,356 @@
+1
+00:00:00,005 --> 00:00:03,002
+- Now that we're doing our infrastructure as code,
+
+2
+00:00:03,002 --> 00:00:06,007
+this ends up having more implications on how we work.
+
+3
+00:00:06,007 --> 00:00:07,006
+- That's right.
+
+4
+00:00:07,006 --> 00:00:09,005
+You're now developing both your app code
+
+5
+00:00:09,005 --> 00:00:11,001
+and your infrastructure code
+
+6
+00:00:11,001 --> 00:00:13,007
+and testing and deploying it identically.
+
+7
+00:00:13,007 --> 00:00:14,009
+- But what does that imply
+
+8
+00:00:14,009 --> 00:00:17,004
+about how we support it in production?
+
+9
+00:00:17,004 --> 00:00:19,000
+- This may not be a surprise
+
+10
+00:00:19,000 --> 00:00:21,005
+if you've taken our DevOps foundations course
+
+11
+00:00:21,005 --> 00:00:23,005
+or it's follow up DevOps Foundation
+
+12
+00:00:23,005 --> 00:00:25,005
+site Reliability Engineering.
+
+13
+00:00:25,005 --> 00:00:27,006
+But it's a shared responsibility.
+
+14
+00:00:27,006 --> 00:00:30,005
+- Yeah. We always think our code is going to work right
+
+15
+00:00:30,005 --> 00:00:32,004
+in production, whether that's app code
+
+16
+00:00:32,004 --> 00:00:34,006
+or infrastructure code, but even
+
+17
+00:00:34,006 --> 00:00:36,008
+if it does upfront things change.
+
+18
+00:00:36,008 --> 00:00:37,008
+You get more users.
+
+19
+00:00:37,008 --> 00:00:40,008
+They start using your app in different ways.
+
+20
+00:00:40,008 --> 00:00:42,007
+- Someone needs to handle the problems
+
+21
+00:00:42,007 --> 00:00:44,004
+and figure out what's going wrong.
+
+22
+00:00:44,004 --> 00:00:47,004
+And the best person for that job is you.
+
+23
+00:00:47,004 --> 00:00:49,008
+- Yeah. As the person who wrote the code
+
+24
+00:00:49,008 --> 00:00:53,002
+you're the one most able to support it and change it.
+
+25
+00:00:53,002 --> 00:00:54,002
+Throwing it over the wall
+
+26
+00:00:54,002 --> 00:00:57,005
+to someone else tends to make both someone less familiar
+
+27
+00:00:57,005 --> 00:00:59,004
+with the code figure out the problems
+
+28
+00:00:59,004 --> 00:01:01,008
+which they're naturally less positioned to do
+
+29
+00:01:01,008 --> 00:01:04,001
+and it hides the problems from you,
+
+30
+00:01:04,001 --> 00:01:07,003
+the person who can actually fix the problems at their core.
+
+31
+00:01:07,003 --> 00:01:10,003
+- Avoid passing the responsibility to someone else.
+
+32
+00:01:10,003 --> 00:01:12,006
+By handling your own production environment,
+
+33
+00:01:12,006 --> 00:01:15,001
+you're making the most effective feedback loop possible
+
+34
+00:01:15,001 --> 00:01:17,007
+from problem to fix.
+
+35
+00:01:17,007 --> 00:01:19,007
+Note that Google's SRE model
+
+36
+00:01:19,007 --> 00:01:22,008
+for taking all over our operations from a product team,
+
+37
+00:01:22,008 --> 00:01:25,005
+it's only used for apps with very large user
+
+38
+00:01:25,005 --> 00:01:27,008
+bases that have proven themselves stable
+
+39
+00:01:27,008 --> 00:01:30,009
+and have monitoring and tools in place sufficient
+
+40
+00:01:30,009 --> 00:01:33,007
+for the SRE team to agree to take it on.
+
+41
+00:01:33,007 --> 00:01:38,001
+Short of that, it's best practice to run it if you wrote it.
+
+42
+00:01:38,001 --> 00:01:39,004
+- So how do you do that?
+
+43
+00:01:39,004 --> 00:01:42,004
+Well, first you want to take a team approach
+
+44
+00:01:42,004 --> 00:01:45,002
+with however many other teams are contributing code
+
+45
+00:01:45,002 --> 00:01:46,005
+to that environment.
+
+46
+00:01:46,005 --> 00:01:48,003
+- [Host] Put together good observability
+
+47
+00:01:48,003 --> 00:01:49,006
+to monitor the system
+
+48
+00:01:49,006 --> 00:01:51,006
+and discern what's going wrong.
+
+49
+00:01:51,006 --> 00:01:53,009
+- [Host 2] Have a practiced incident management process
+
+50
+00:01:53,009 --> 00:01:57,006
+that makes handling problems routine and less stressful.
+
+51
+00:01:57,006 --> 00:01:58,008
+- When there's a problem
+
+52
+00:01:58,008 --> 00:02:01,005
+prioritize coding and testing a real fix.
+
+53
+00:02:01,005 --> 00:02:05,001
+Don't just keep putting out the fires each time they happen.
+
+54
+00:02:05,001 --> 00:02:08,002
+I mentioned that AT&T Cybersecurity SaaS product
+
+55
+00:02:08,002 --> 00:02:09,002
+that I worked on.
+
+56
+00:02:09,002 --> 00:02:11,006
+We had a complete CICD pipeline.
+
+57
+00:02:11,006 --> 00:02:14,003
+They rolled out infrastructure code and app code.
+
+58
+00:02:14,003 --> 00:02:15,008
+We had loads of monitoring
+
+59
+00:02:15,008 --> 00:02:19,000
+and could route issues to the right team pretty reliably.
+
+60
+00:02:19,000 --> 00:02:22,000
+- Now, what did you do for problems where it wasn't clear
+
+61
+00:02:22,000 --> 00:02:23,006
+what was wrong?
+
+62
+00:02:23,006 --> 00:02:25,008
+- In most places I'd worked up until then
+
+63
+00:02:25,008 --> 00:02:27,007
+operations was always the first line
+
+64
+00:02:27,007 --> 00:02:29,009
+of response for production issues.
+
+65
+00:02:29,009 --> 00:02:31,005
+But in this case, the majority
+
+66
+00:02:31,005 --> 00:02:34,000
+of them were being caused by our app code.
+
+67
+00:02:34,000 --> 00:02:36,005
+So we put the developers on call first and let them escalate
+
+68
+00:02:36,005 --> 00:02:40,000
+to an operations engineer if they needed one.
+
+69
+00:02:40,000 --> 00:02:43,001
+That reduced overall off hours time spent,
+
+70
+00:02:43,001 --> 00:02:45,009
+and it meant that very actionable improvements could get put
+
+71
+00:02:45,009 --> 00:02:47,008
+into the product backlog.
+
+72
+00:02:47,008 --> 00:02:50,000
+- But didn't your product people object to that work
+
+73
+00:02:50,000 --> 00:02:52,008
+interrupting their precious future development time?
+
+74
+00:02:52,008 --> 00:02:53,009
+- Not at all.
+
+75
+00:02:53,009 --> 00:02:56,002
+The product people wanted the product to work right
+
+76
+00:02:56,002 --> 00:02:58,004
+as much as anyone and were happy for us
+
+77
+00:02:58,004 --> 00:03:00,005
+to prioritize reliability work,
+
+78
+00:03:00,005 --> 00:03:02,005
+especially when we had such direct data
+
+79
+00:03:02,005 --> 00:03:05,003
+to prove the results it would have generated
+
+80
+00:03:05,003 --> 00:03:07,008
+by people knowledgeable with the code.
+
+81
+00:03:07,008 --> 00:03:10,002
+We called it eating our own dog food.
+
+82
+00:03:10,002 --> 00:03:13,006
+- Ah, some people like to say, drinking your own champagne.
+
+83
+00:03:13,006 --> 00:03:15,007
+- That's 1% or nonsense.
+
+84
+00:03:15,007 --> 00:03:16,008
+I work for a living.
+
+85
+00:03:16,008 --> 00:03:17,007
+- Okay, Ernest.
+
+86
+00:03:17,007 --> 00:03:18,007
+All right.
+
+87
+00:03:18,007 --> 00:03:20,001
+All right. Look, there, there.
+
+88
+00:03:20,001 --> 00:03:22,001
+Let's get you a nice nap and then we'll be back for a video
+
+89
+00:03:22,001 --> 00:03:25,000
+on running the rest of your operations as code two.
+

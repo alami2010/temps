@@ -1,0 +1,348 @@
+1
+00:00:00,006 --> 00:00:01,009
+- Welcome back.
+
+2
+00:00:01,009 --> 00:00:04,009
+We've been talking a lot about the infrastructure itself,
+
+3
+00:00:04,009 --> 00:00:06,003
+but you may be wondering,
+
+4
+00:00:06,003 --> 00:00:08,008
+in the words of the great sainted Clara Peller,
+
+5
+00:00:08,008 --> 00:00:10,007
+"Where's the beef?"
+
+6
+00:00:10,007 --> 00:00:12,009
+Well, now we'll move on into the second phase
+
+7
+00:00:12,009 --> 00:00:15,001
+of explaining infrastructure as code
+
+8
+00:00:15,001 --> 00:00:17,004
+with infrastructure automation.
+
+9
+00:00:17,004 --> 00:00:19,002
+You can split automation frameworks
+
+10
+00:00:19,002 --> 00:00:21,009
+into two general camps, historically:
+
+11
+00:00:21,009 --> 00:00:24,009
+ones that configure the overall systems environment,
+
+12
+00:00:24,009 --> 00:00:27,006
+creating networks and servers and such;
+
+13
+00:00:27,006 --> 00:00:29,003
+and then, tools that configure
+
+14
+00:00:29,003 --> 00:00:31,007
+the operating system on the boxes.
+
+15
+00:00:31,007 --> 00:00:33,003
+Some tools do both,
+
+16
+00:00:33,003 --> 00:00:35,006
+but most have their roots firmly in one world
+
+17
+00:00:35,006 --> 00:00:37,009
+and just dabble in the other.
+
+18
+00:00:37,009 --> 00:00:39,000
+This is why we started
+
+19
+00:00:39,000 --> 00:00:41,009
+by going over cloud containers and serverless.
+
+20
+00:00:41,009 --> 00:00:43,006
+With traditional hardware,
+
+21
+00:00:43,006 --> 00:00:46,001
+you pretty much need to set it all up manually.
+
+22
+00:00:46,001 --> 00:00:48,009
+There are some tools to configure the boxes themselves
+
+23
+00:00:48,009 --> 00:00:50,003
+and the network a bit,
+
+24
+00:00:50,003 --> 00:00:53,001
+but the box and lines level of the system diagram
+
+25
+00:00:53,001 --> 00:00:55,000
+is slow and physical.
+
+26
+00:00:55,000 --> 00:00:57,006
+With these newer infrastructure technologies,
+
+27
+00:00:57,006 --> 00:00:59,005
+while they may have graphical interfaces
+
+28
+00:00:59,005 --> 00:01:02,001
+to click on to set things up manually,
+
+29
+00:01:02,001 --> 00:01:04,004
+they also have programmatic APIs
+
+30
+00:01:04,004 --> 00:01:06,008
+that can be exercised by tools or code
+
+31
+00:01:06,008 --> 00:01:09,008
+to build your network out on the fly.
+
+32
+00:01:09,008 --> 00:01:11,009
+This means we can use tools or code
+
+33
+00:01:11,009 --> 00:01:16,003
+to create our infrastructure from a defined description.
+
+34
+00:01:16,003 --> 00:01:19,004
+Each of the cloud providers has their own way to do this.
+
+35
+00:01:19,004 --> 00:01:22,002
+For example, AWS's CloudFormation
+
+36
+00:01:22,002 --> 00:01:25,001
+is a way to describe a complete network of systems
+
+37
+00:01:25,001 --> 00:01:28,002
+using JSON or YAML templates.
+
+38
+00:01:28,002 --> 00:01:30,006
+You then use a command line tool or an API
+
+39
+00:01:30,006 --> 00:01:32,009
+to feed that description into the cloud,
+
+40
+00:01:32,009 --> 00:01:34,006
+and it makes it for you.
+
+41
+00:01:34,006 --> 00:01:37,001
+Here's an example CloudFormation file
+
+42
+00:01:37,001 --> 00:01:40,008
+that describes creating a single EC2 virtual server,
+
+43
+00:01:40,008 --> 00:01:42,009
+with variables for the machine image,
+
+44
+00:01:42,009 --> 00:01:44,007
+instant size and such,
+
+45
+00:01:44,007 --> 00:01:47,002
+and some quick commands to update the OS
+
+46
+00:01:47,002 --> 00:01:49,005
+and start NGINX and boot.
+
+47
+00:01:49,005 --> 00:01:52,006
+You just feed it in, and, bam, about five minutes later,
+
+48
+00:01:52,006 --> 00:01:54,008
+you have a full running system in the cloud,
+
+49
+00:01:54,008 --> 00:01:57,008
+just like you went and clicked in the EC2 console,
+
+50
+00:01:57,008 --> 00:02:00,000
+but better because it's repeatable
+
+51
+00:02:00,000 --> 00:02:03,007
+and you can do it 100 times simultaneously if you want.
+
+52
+00:02:03,007 --> 00:02:05,005
+And you can build as large
+
+53
+00:02:05,005 --> 00:02:08,004
+and as complicated as system as you can model.
+
+54
+00:02:08,004 --> 00:02:09,003
+To update it,
+
+55
+00:02:09,003 --> 00:02:13,000
+you just change the model file and resubmit.
+
+56
+00:02:13,000 --> 00:02:14,005
+Now, you do have options
+
+57
+00:02:14,005 --> 00:02:17,004
+beyond the cloud provider-specific tooling.
+
+58
+00:02:17,004 --> 00:02:18,006
+There are similar tools
+
+59
+00:02:18,006 --> 00:02:21,008
+that try to provide a cloud agnostic solution.
+
+60
+00:02:21,008 --> 00:02:25,001
+Probably the most popular is HashiCorp's Terraform.
+
+61
+00:02:25,001 --> 00:02:27,005
+It has integration with most major cloud providers
+
+62
+00:02:27,005 --> 00:02:30,002
+and a large library of pre-existing modules
+
+63
+00:02:30,002 --> 00:02:34,003
+to make standard constructs like AWS EC2 instances.
+
+64
+00:02:34,003 --> 00:02:36,003
+And you can write your own.
+
+65
+00:02:36,003 --> 00:02:39,000
+You can buy it as a cloud service from them if you want,
+
+66
+00:02:39,000 --> 00:02:42,004
+but the tool itself is open-source.
+
+67
+00:02:42,004 --> 00:02:44,004
+Those tools are all declarative.
+
+68
+00:02:44,004 --> 00:02:46,005
+In other words, you write a description file
+
+69
+00:02:46,005 --> 00:02:47,007
+and the tool reads it
+
+70
+00:02:47,007 --> 00:02:50,005
+and creates the system that you've described.
+
+71
+00:02:50,005 --> 00:02:53,004
+There are also plenty of code libraries you can use
+
+72
+00:02:53,004 --> 00:02:55,008
+to build and manipulate cloud resources
+
+73
+00:02:55,008 --> 00:02:58,005
+in various programming languages.
+
+74
+00:02:58,005 --> 00:03:02,000
+AWS provides the CDK, or Cloud Development Kit,
+
+75
+00:03:02,000 --> 00:03:04,004
+which supports several languages.
+
+76
+00:03:04,004 --> 00:03:07,009
+A common solution here is Python's Boto library.
+
+77
+00:03:07,009 --> 00:03:09,006
+Here's an example of the code
+
+78
+00:03:09,006 --> 00:03:13,004
+to spin up an EC2 instance from within Python.
+
+79
+00:03:13,004 --> 00:03:16,008
+Here, you don't have a single description of the system.
+
+80
+00:03:16,008 --> 00:03:18,005
+You just add and change items
+
+81
+00:03:18,005 --> 00:03:21,009
+organically from within your code.
+
+82
+00:03:21,009 --> 00:03:23,002
+In case you were wondering,
+
+83
+00:03:23,002 --> 00:03:26,004
+yes, you can use these tools or similar ones
+
+84
+00:03:26,004 --> 00:03:28,003
+to create the base systems environment
+
+85
+00:03:28,003 --> 00:03:32,008
+for Kubernetes clusters and serverless architectures.
+
+86
+00:03:32,008 --> 00:03:35,006
+We'll talk about the up and downsides of these approaches
+
+87
+00:03:35,006 --> 00:03:37,000
+in our next video.
+
