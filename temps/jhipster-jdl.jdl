@@ -1,0 +1,60 @@
+
+entity Program {
+	id UUID,
+    name String
+}
+
+entity Transaction {
+	id UUID,
+    name String
+}
+
+entity ManagementType {
+	id UUID,
+    type ManagementTypeEnum
+}
+
+
+entity Configuration {
+	id UUID,
+    type String
+}
+ 
+ 
+entity Mapping {
+	id UUID,
+    type String
+}
+
+entity FileCong {
+	id UUID,
+    fixeName String,
+    date String,
+    fromat String
+}
+ 
+ 
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Program to Transaction{program}
+    Transaction to ManagementType{transaction}
+    ManagementType to Configuration{managementType}
+    Configuration to Mapping{configuration},
+    Mapping to FileCong{mapping}
+ 
+}
+ 
+ 
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
