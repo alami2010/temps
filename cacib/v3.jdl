@@ -1,0 +1,97 @@
+
+entity Program {
+	id UUID,
+    name String
+}
+
+entity Transaction {
+	id UUID,
+    name String
+}
+
+entity ManagementTypeContext {
+	id UUID,
+    type ManagementType
+}
+
+
+entity Configuration {
+	id UUID,
+   name String,
+   effectiveDate LocalDate
+}
+ 
+ 
+entity Mapping {
+	id UUID
+}
+
+entity FileConfiguration {
+	id UUID,
+    fixedName String,
+    dateType DateType,
+    format DateFormat
+}
+ 
+ entity VariableMapping {
+	id UUID,
+    position String,
+    sheetName String,
+    type MappingType,
+ }
+ 
+ 
+ entity InputVariable {
+	id UUID,
+    label String,
+    shortName String,
+    typeVariable VariableType,
+ }
+
+enum ManagementType {
+    CLASSIC 
+}
+
+enum DateFormat {
+    FIXING_DATE, REPORTING_DATE 
+}
+
+enum DateType {
+    DDDDYYYY, MMDDYYYY 
+}
+
+enum VariableType {
+    NORMAL, PERCENTAGE , AMOUNT 
+}
+
+enum MappingType {
+    MAPPED, SEASONAL , INPUTED 
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Program to Transaction{program}
+    Transaction to ManagementTypeContext{transaction}
+    ManagementTypeContext to Configuration{managementType}
+    Mapping to FileConfiguration{mapping}
+    FileConfiguration to VariableMapping{fileConfiguration}
+ 
+}
+
+relationship OneToOne {
+	    Configuration{mapping} to Mapping{configuration},
+
+}
+
+ 
+ 
+ 
+paginate all with infinite-scroll
+ 
+ 
+ dto * with mapstruct
+
+ 
+service all with serviceImpl  
+
