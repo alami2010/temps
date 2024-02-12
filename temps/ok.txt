@@ -1,0 +1,45 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MvcResult;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class YourTestClass {
+
+    @InjectMocks
+    private YourClassUnderTest yourClassUnderTest;
+
+    @Mock
+    private MvcResult mockMvcResult;
+
+    @Test
+    void testGetResultList() throws Exception {
+        // Mocking response content
+        String responseContent = "[{\"name\":\"John\"},{\"name\":\"Doe\"}]";
+        MockHttpServletResponse mockResponse = new MockHttpServletResponse();
+        mockResponse.setContent(responseContent.getBytes());
+        when(mockMvcResult.getResponse()).thenReturn(mockResponse);
+
+        // Test type
+        Class<List> listType = List.class;
+
+        // Perform the method under test
+        List resultList = yourClassUnderTest.getResultList(mockMvcResult, listType);
+
+        // Assert
+        assertEquals(2, resultList.size());
+        assertEquals("John", resultList.get(0).getName());
+        assertEquals("Doe", resultList.get(1).getName());
+    }
+}
