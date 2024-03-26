@@ -1,0 +1,12 @@
+describe('ExampleComponent', () => {
+  it('renders with Provider wrapper', () => {
+    const store = mockStore({ /* Your initial Redux state here */ });
+    const wrapper = shallow(
+      <Provider store={store}>
+        <ExampleComponent />
+      </Provider>
+    );
+
+    expect(wrapper.find(ExampleComponent).length).toEqual(1);
+  });
+});
