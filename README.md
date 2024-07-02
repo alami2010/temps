@@ -2,3 +2,7 @@ https://www.google.com/travel/flights/booking?tfs=CBwQAhpJEgoyMDI0LTAzLTE1Ih8KA0
 
 
 https://www.google.com/travel/flights/booking?tfs=CBwQAhpFEgoyMDI0LTAzLTI0IiAKA0pFRBIKMjAyNC0wMy0yNBoDRkNPKgJXNDIEODM1MGoHCAESA0pFRHIMCAMSCC9tLzA2YzYyGkoSCjIwMjQtMDMtMjUiIAoDRkNPEgoyMDI0LTAzLTI1GgNPUlkqAlc0MgQ4NTE1agwIAxIIL20vMDZjNjJyDAgDEggvbS8wNXF0akABSAFwAYIBCwj___________8BmAED&tfu=CmxDalJJWTJwSmQxcG9aMXBQUjAxQlNXTXpUMmRDUnkwdExTMHRMUzB0TFhkbFluZHlOVUZCUVVGQlIxaG1XSFkwUWxKV2ExRkJFZ1pYTkRnMU1UVWFDZ2pZYUJBQ0dnTkZWVkk0SEhDNGNRPT0SAggBIgYKATAKATE
+
+
+
+Nous avons effectué une refactorisation de Liquibase et du Data Mapper afin de séparer les scripts LDD de la base de données des scripts de test qui s'exécutent uniquement en local. Pensez donc à supprimer la base de données MongoDB locale lors de votre prochain "pull"
